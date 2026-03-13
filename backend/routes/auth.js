@@ -1,44 +1,71 @@
 const express = require("express")
 const router = express.Router()
-const User = require("../models/User")
+
 const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const User = require("../models/User")
 
-router.post("/signup",async(req,res)=>{
+// SIGNUP
+router.post("/signup", async (req, res) => {
+  try {
 
-const {name,email,password,role} = req.body
+    const { name, email, password, role } = req.body
 
-const hash = await bcrypt.hash(password,10)
+    const existingUser = await User.findOne({ email })
 
-const user = new User({
-name,
-email,
-password:hash,
-role
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" })
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role
+    })
+
+    await newUser.save()
+
+    res.json({ message: "Signup successful" })
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Server error" })
+  }
 })
 
-await user.save()
 
-res.json({message:"Signup success"})
+// LOGIN
+router.post("/login", async (req, res) => {
+  try {
 
-})
+    const { email, password } = req.body
 
-router.post("/login",async(req,res)=>{
+    const user = await User.findOne({ email })
 
-const {email,password} = req.body
+    if (!user) {
+      return res.status(400).json({ message: "User not found" })
+    }
 
-const user = await User.findOne({email})
+    const isMatch = await bcrypt.compare(password, user.password)
 
-if(!user) return res.status(400).json({msg:"User not found"})
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" })
+    }
 
-const valid = await bcrypt.compare(password,user.password)
+    res.json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        role: user.role
+      }
+    })
 
-if(!valid) return res.status(400).json({msg:"Wrong password"})
-
-const token = jwt.sign({id:user._id,role:user.role},"secret")
-
-res.json({token,role:user.role})
-
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: "Server error" })
+  }
 })
 
 module.exports = router
