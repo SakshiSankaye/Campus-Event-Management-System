@@ -3,8 +3,10 @@ const mongoose = require("mongoose")
 const cors = require("cors")
 
 const authRoutes = require("./routes/auth")
+const userRoutes = require("./routes/userRoutes")
+const eventRoutes = require("./routes/eventRoutes") // ⭐ ADD THIS
 
-const app = express()
+const app = express() // dont change other sections just update required for now
 
 // ================= MIDDLEWARE =================
 
@@ -26,6 +28,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/campus_events", {
 // ================= ROUTES =================
 
 app.use("/api/auth", authRoutes)
+
+app.use("/api/users", userRoutes)
+
+app.use("/api/events", eventRoutes) // ⭐ ADD THIS
 
 // Test route
 app.get("/", (req, res) => {

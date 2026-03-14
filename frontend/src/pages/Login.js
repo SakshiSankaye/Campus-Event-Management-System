@@ -21,9 +21,9 @@ const res = await axios.post(
 
 const role = res.data.user.role
 
-if(role==="student") navigate("/student")
-if(role==="organizer") navigate("/organizer")
-if(role==="admin") navigate("/admin")
+if(role==="student") navigate("/StudentDashboard")
+if(role==="organizer") navigate("/OrganizerDashboard")
+if(role==="admin") navigate("/Admin/Dashboard")
 
 }
 catch(err){
