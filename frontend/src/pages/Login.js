@@ -19,9 +19,13 @@ const res = await axios.post(
 {email,password}
 )
 
-const role = res.data.user.role
+const role = res.data.user.rol
+
 
 if(role==="student") navigate("/student-dashboard")
+
+if(role==="student") navigate("/StudentDashboard")
+
 if(role==="organizer") navigate("/OrganizerDashboard")
 if(role==="admin") navigate("/Admin/Dashboard")
 

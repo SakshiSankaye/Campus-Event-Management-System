@@ -7,8 +7,8 @@ import ManageUsers from "./pages/ManageUsers"
 import ManageEvents from "./pages/ManageEvents"
 import CreateEvent from "./pages/CreateEvent"
 import EditEvent from "./pages/EditEvent"
-import StudentDashboard from "./pages/StudentDashboard";
 
+import StudentDashboard from "./pages/StudentDashboard";
 function App(){
 
 return(
@@ -20,8 +20,13 @@ return(
 <Route path="/" element={<Login/>}/>
 <Route path="/signup" element={<Signup/>}/>
 
+
 <Route path="/organizer" element={<h1>Organizer Dashboard</h1>}/>
 <Route path="/student-dashboard" element={<StudentDashboard />} />
+
+<Route path="/student" element={<h1>Student Dashboard</h1>}/>
+<Route path="/organizer" element={<h1>Organizer Dashboard</h1>}/>
+
 <Route path="/admin" element={<Navigate to="/admin/dashboard"/>}/>
 
 <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
