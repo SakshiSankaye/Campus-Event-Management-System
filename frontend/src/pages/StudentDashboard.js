@@ -1,73 +1,77 @@
-import Navbar from "../components/MainNavbar"
-
-const events = [
-
-{
-title:"AI Workshop",
-date:"12 June 2026",
-desc:"Learn Artificial Intelligence basics"
-},
-
-{
-title:"Hackathon",
-date:"18 June 2026",
-desc:"24 hour coding competition"
-},
-
-{
-title:"Cultural Fest",
-date:"25 June 2026",
-desc:"Dance, music and fun activities"
-}
-
-]
+import React from "react";
+import Student_Sidebar from "../components/StudentSidebar";
+import Header from "../components/Header";
+import StudentEventCard from "../components/StudentEventCard";
+import "../styles/dashboard.css";
 
 function StudentDashboard(){
 
+
+const events = [
+  {
+    title: "Hackathon",
+    date: "18 March",
+    location: "Auditorium"
+  },
+  {
+    title: "Seminar",
+    date: "25 March",
+    location: "Hall A"
+  },
+  {
+    title: "Coding Contest",
+    date: "30 March",
+    location: "Lab 2"
+  },
+  {
+    title: "Tech Fest",
+    date: "5 April",
+    location: "Campus Ground"
+  }
+];
+
 return(
 
-<div className="min-h-screen bg-gray-100">
+<div className="dashboard">
 
-<Navbar/>
+  <Student_Sidebar/>
 
-<div className="p-8">
+  <div className="main">
 
-<h2 className="text-2xl font-bold mb-6">
-Upcoming Events
-</h2>
+    <Header/>
 
-<div className="grid md:grid-cols-3 gap-6">
+    <div className="content">
 
-{events.map((event,index)=>(
+      <div className="welcome-box">
+        Welcome! Explore and register for upcoming campus events.
+      </div>
 
-<div
-key={index}
-className="bg-white p-6 rounded-xl shadow hover:shadow-xl transition"
->
+      {/* ✅ USE MAP HERE */}
+      <div className="event-grid">
 
-<h3 className="text-xl font-bold">
-{event.title}
-</h3>
+        {events.map((event, index) => (
+          <StudentEventCard key={index} event={event} />
+        ))}
 
-<p className="text-gray-600 mt-2">
-{event.desc}
-</p>
+      </div>
 
-<p className="text-sm mt-2 text-gray-500">
-📅 {event.date}
-</p>
+      <div className="registered-section">
 
-<button className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded">
-Register
-</button>
+        <h3>My Registered Events:</h3>
 
-</div>
+        <div className="registered-box">
 
-))}
+          <p>Event Name | Date | Status | Action</p>
+          <p>Hackathon | 18 Mar | Registered | View</p>
+          <p>Seminar | 25 Mar | Attended | Certificate</p>
 
-</div>
+        </div>
 
-</div>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>
 
@@ -75,4 +79,4 @@ Register
 
 }
 
-export default StudentDashboard
+export default StudentDashboard;
