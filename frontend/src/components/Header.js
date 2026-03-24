@@ -1,32 +1,27 @@
 import React from "react";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaUser } from "react-icons/fa";
 
-const Header = () => {
+function Header(){
 
-  return (
-    <div className="header">
+return(
 
-      <input
-        type="text"
-        placeholder="Search Events..."
-        className="search-bar"
-      />
+<div className="header">
 
-      <div className="header-icons">
+  <input
+    type="text"
+    placeholder="Search"
+    className="search"
+  />
 
-        <FaBell className="icon" />
+  <div className="icons">
+    <FaBell/>
+    <FaUser/>
+  </div>
 
-        <img
-          src="/profile.png"
-          alt="profile"
-          className="profile-icon"
-        />
+</div>
 
-      </div>
+)
 
-    </div>
-  );
+}
 
-};
-
-export default Header;
+export default Header
