@@ -1,4 +1,4 @@
-import Navbar from "../components/AdminNavbar"
+import Navbar from "../components/MainNavbar"
 
 const events = [
 

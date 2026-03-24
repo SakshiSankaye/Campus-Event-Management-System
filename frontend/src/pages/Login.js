@@ -18,16 +18,15 @@ const res = await axios.post(
 "http://localhost:5000/api/auth/login",
 {email,password}
 )
+localStorage.setItem("user", JSON.stringify(res.data.user))  // ✅
 
-const role = res.data.user.rol
+const role = res.data.user.role
 
+if(role==="student") navigate("/student/dashboard")
 
-if(role==="student") navigate("/student-dashboard")
+if(role==="organizer") navigate("/organizer/dashboard")
 
-if(role==="student") navigate("/StudentDashboard")
-
-if(role==="organizer") navigate("/OrganizerDashboard")
-if(role==="admin") navigate("/Admin/Dashboard")
+if(role==="admin") navigate("/admin/dashboard")
 
 }
 catch(err){

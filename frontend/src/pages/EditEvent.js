@@ -1,52 +1,58 @@
-import { useState,useEffect } from "react"
-import { useParams,useNavigate } from "react-router-dom"
+import { useState, useEffect, useCallback } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 
 import AdminSidebar from "../components/AdminSidebar"
 import AdminNavbar from "../components/AdminNavbar"
 
-import { getEvents,updateEvent } from "../services/adminApi"
+import { getEvents, updateEvent } from "../services/adminApi"
 
 function EditEvent(){
 
-const {id} = useParams()
+const { id } = useParams()
 const navigate = useNavigate()
 
-const [title,setTitle] = useState("")
-const [date,setDate] = useState("")
-const [location,setLocation] = useState("")
+const [title, setTitle] = useState("")
+const [date, setDate] = useState("")
+const [location, setLocation] = useState("")
+const [loading, setLoading] = useState(true)
 
+// ✅ FIXED: wrapped in useCallback
+const loadEvent = useCallback(async () => {
+
+  const events = await getEvents()
+
+  const event = events.find(e => e._id === id)
+
+  if(event){
+    setTitle(event.title)
+    setDate(event.date)
+    setLocation(event.location)
+  }
+
+  setLoading(false)
+
+}, [id])
+
+// ✅ FIXED: dependency added
 useEffect(()=>{
-loadEvent()
-},[])
-
-const loadEvent = async()=>{
-
-const events = await getEvents()
-
-const event = events.find(e=>e._id === id)
-
-if(event){
-
-setTitle(event.title)
-setDate(event.date)
-setLocation(event.location)
-
-}
-
-}
+  loadEvent()
+}, [loadEvent])
 
 const submit = async(e)=>{
+  e.preventDefault()
 
-e.preventDefault()
+  await updateEvent(id,{
+    title,
+    date,
+    location
+  })
 
-await updateEvent(id,{
-title,
-date,
-location
-})
+  navigate("/admin/events")
+}
 
-navigate("/admin/events")
-
+// ✅ Loading UI
+if(loading){
+  return <h2 className="text-center mt-10">Loading...</h2>
 }
 
 return(
@@ -71,6 +77,7 @@ Edit Event
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 className="border p-2 w-full"
+placeholder="Event Title"
 />
 
 <input
@@ -84,6 +91,7 @@ className="border p-2 w-full"
 value={location}
 onChange={(e)=>setLocation(e.target.value)}
 className="border p-2 w-full"
+placeholder="Location"
 />
 
 <button className="bg-green-500 text-white px-6 py-2 rounded">

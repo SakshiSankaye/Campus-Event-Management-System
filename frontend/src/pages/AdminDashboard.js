@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react"
 import AdminSidebar from "../components/AdminSidebar"
-import AdminNavbar from "../components/AdminNavbar"
+import AdminNavbar from "../components/MainNavbar"
 import {getStats} from "../services/adminApi"
 
 import {BarChart,Bar,XAxis,YAxis,Tooltip,CartesianGrid} from "recharts"
