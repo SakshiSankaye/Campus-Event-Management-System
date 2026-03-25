@@ -1,7 +1,7 @@
 import {useState} from "react"
 import {useNavigate} from "react-router-dom"
 import AdminSidebar from "../components/AdminSidebar"
-import AdminNavbar from "../components/AdminNavbar"
+import AdminNavbar from "../components/MainNavbar"
 import {createEvent} from "../services/adminApi"
 
 function CreateEvent(){

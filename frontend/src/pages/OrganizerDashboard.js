@@ -1,37 +1,139 @@
-import Navbar from "../components/AdminNavbar"
+import { useEffect, useState } from "react"
+import MainNavbar from "../components/MainNavbar"
+import { getEvents } from "../services/adminApi"
 
 function OrganizerDashboard(){
 
+const [events,setEvents] = useState([])
+
+useEffect(()=>{
+loadEvents()
+},[])
+
+const loadEvents = async ()=>{
+const data = await getEvents()
+setEvents(data)
+}
+
+// Summary
+const totalEvents = events.length
+const upcomingEvents = events.filter(e => new Date(e.date) > new Date())
+const totalParticipants = events.reduce(
+  (sum,e)=> sum + (e.registeredUsers?.length || 0),0
+)
+
 return(
 
-<div className="min-h-screen bg-gray-100">
+<div className="bg-gray-100 min-h-screen">
 
-<Navbar/>
+<MainNavbar/>
 
-<div className="p-8">
+<div className="flex">
 
-<h2 className="text-2xl font-bold mb-6">
-Organizer Panel
-</h2>
+{/* SIDEBAR */}
+<div className="w-64 bg-gray-900 text-white min-h-screen p-6">
 
-<div className="grid md:grid-cols-2 gap-6">
+<h2 className="text-xl font-bold mb-6">Organizer</h2>
 
-<div className="bg-white p-6 rounded-xl shadow">
-<h3 className="text-lg font-bold">
-Create Event
-</h3>
-<p className="text-gray-600">
-Add new campus events.
-</p>
+<ul className="space-y-4">
+
+<li className="hover:text-blue-400 cursor-pointer">Dashboard</li>
+<li className="hover:text-blue-400 cursor-pointer">Create Events</li>
+<li className="hover:text-blue-400 cursor-pointer">Manage Events</li>
+<li className="hover:text-blue-400 cursor-pointer">Participants</li>
+<li className="hover:text-blue-400 cursor-pointer">Attendance</li>
+<li className="hover:text-blue-400 cursor-pointer">Feedback</li>
+
+</ul>
+
 </div>
 
-<div className="bg-white p-6 rounded-xl shadow">
-<h3 className="text-lg font-bold">
-Manage Registrations
-</h3>
-<p className="text-gray-600">
-View student registrations.
-</p>
+{/* MAIN CONTENT */}
+<div className="flex-1 p-8">
+
+{/* HEADER */}
+<div className="bg-white p-4 rounded shadow mb-6 text-center font-semibold">
+Welcome, Event Organizer! Manage and monitor all your campus events here.
+</div>
+
+{/* SUMMARY */}
+<div className="grid grid-cols-3 gap-6 mb-6">
+
+<div className="bg-blue-500 text-white p-6 rounded shadow">
+<h3>Total Events</h3>
+<p className="text-3xl">{totalEvents}</p>
+</div>
+
+<div className="bg-green-500 text-white p-6 rounded shadow">
+<h3>Upcoming Events</h3>
+<p className="text-3xl">{upcomingEvents.length}</p>
+</div>
+
+<div className="bg-purple-500 text-white p-6 rounded shadow">
+<h3>Participants</h3>
+<p className="text-3xl">{totalParticipants}</p>
+</div>
+
+</div>
+
+{/* UPCOMING EVENTS */}
+<div className="bg-white p-6 rounded shadow mb-6">
+
+<h3 className="font-bold mb-4">Upcoming Events</h3>
+
+{upcomingEvents.length === 0 ? (
+<p>No upcoming events</p>
+) : (
+upcomingEvents.slice(0,3).map(event=>(
+<div key={event._id} className="border-b py-3">
+
+<h4 className="font-semibold">{event.title}</h4>
+<p>Date: {event.date}</p>
+<p>Venue: {event.location}</p>
+
+</div>
+))
+)}
+
+</div>
+
+{/* PARTICIPANTS */}
+<div className="bg-white p-6 rounded shadow">
+
+<h3 className="font-bold mb-4">Participant List</h3>
+
+<table className="w-full border">
+
+<thead className="bg-gray-200">
+
+<tr>
+<th>Name</th>
+<th>Event</th>
+<th>Date</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{events.flatMap(event => 
+(event.registeredUsers || []).map((user,i)=>(
+<tr key={i} className="text-center border-t">
+
+<td>{user.name || "Student"}</td>
+<td>{event.title}</td>
+<td>{event.date}</td>
+<td className="text-green-600">Registered</td>
+
+</tr>
+))
+)}
+
+</tbody>
+
+</table>
+
 </div>
 
 </div>

@@ -1,7 +1,7 @@
 import {useEffect,useState} from "react"
 import {Link} from "react-router-dom"
 import AdminSidebar from "../components/AdminSidebar"
-import AdminNavbar from "../components/AdminNavbar"
+import AdminNavbar from "../components/MainNavbar"
 
 import {getEvents,deleteEvent} from "../services/adminApi"
 

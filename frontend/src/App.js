@@ -8,6 +8,8 @@ import ManageUsers from "./pages/ManageUsers"
 import ManageEvents from "./pages/ManageEvents"
 import CreateEvent from "./pages/CreateEvent"
 import EditEvent from "./pages/EditEvent"
+import OrganizerDashboard from "./pages/OrganizerDashboard"
+import OrganizerLayout from "./layouts/OrganizerLayout"
 
 import StudentDashboard from "./pages/StudentDashboard"
 
@@ -27,7 +29,6 @@ return(
 <Route path="/student/dashboard" element={<StudentDashboard/>}/>
 
 {/* ORGANIZER */}
-<Route path="/organizer/dashboard" element={<h1>Organizer Dashboard</h1>}/>
 
 {/* ADMIN */}
 <Route path="/admin" element={<Navigate to="/admin/dashboard"/>}/>
@@ -37,7 +38,8 @@ return(
 <Route path="/admin/events" element={<ManageEvents/>}/>
 <Route path="/admin/create-event" element={<CreateEvent/>}/>
 <Route path="/admin/edit-event/:id" element={<EditEvent/>}/>
-
+<Route path="/organizer/dashboard" element={<OrganizerDashboard/>}/>
+<Route path="/organizer" element={<OrganizerLayout/>}></Route>
 </Routes>
 
 </BrowserRouter>
