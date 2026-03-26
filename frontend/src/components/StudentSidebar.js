@@ -22,16 +22,16 @@ return(
     </div>
   </div>
 
-  <ul className="menu">
+ <ul className="menu">
 
-    <li onClick={()=>navigate("/student-dashboard")}>Dashboard</li>
-    <li>Browse Events</li>
-    <li>My Events</li>
-    <li>Certificates</li>
-    <li>Feedback</li>
-    <li onClick={handleLogout}>Logout</li>
+  <li onClick={()=>navigate("/student/dashboard")}>Dashboard</li>
+  <li onClick={()=>navigate("/student-browse-events")}>Browse Events</li>
+  <li onClick={()=>navigate("/student-my-events")}>My Events</li>
+  <li onClick={()=>navigate("/student-certificates")}>Certificates</li>
+  <li onClick={()=>navigate("/student-feedback")}>Feedback</li>
+  <li onClick={handleLogout}>Logout</li>
 
-  </ul>
+</ul>
 
 </div>
 

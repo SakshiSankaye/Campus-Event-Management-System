@@ -6,27 +6,30 @@ import "../styles/dashboard.css";
 
 function StudentDashboard(){
 
-
 const events = [
   {
     title: "Hackathon",
     date: "18 March",
-    location: "Auditorium"
+    location: "Auditorium",
+    color: "brown"
   },
   {
     title: "Seminar",
     date: "25 March",
-    location: "Hall A"
+    location: "Hall A",
+    color: "green"
   },
   {
     title: "Coding Contest",
     date: "30 March",
-    location: "Lab 2"
+    location: "Lab 2",
+    color: "purple"
   },
   {
     title: "Tech Fest",
     date: "5 April",
-    location: "Campus Ground"
+    location: "Campus Ground",
+    color: "orange"
   }
 ];
 

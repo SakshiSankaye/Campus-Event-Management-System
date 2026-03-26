@@ -16,6 +16,10 @@ import Participants from "./pages/Participants"
 import Attendance from "./pages/Attendance"
 import Feedback from "./pages/Feedback"
 import StudentDashboard from "./pages/StudentDashboard"
+import StudentBrowseEvent from "./pages/StudentBrowseEvent";
+import StudentMyEvents from "./pages/StudentMyEvents";
+import StudentCertificates from "./pages/StudentCertificates";
+import StudentFeedback from "./pages/StudentFeedback";
 
 function App(){
 
@@ -31,6 +35,10 @@ return(
 
 {/* STUDENT */}
 <Route path="/student/dashboard" element={<StudentDashboard/>}/>
+<Route path="/student-browse-events" element={<StudentBrowseEvent />} />
+<Route path="/student-my-events" element={<StudentMyEvents />} />
+<Route path="/student-certificates" element={<StudentCertificates />} />
+<Route path="/student-feedback" element={<StudentFeedback />} />
 
 {/* ORGANIZER */}
 

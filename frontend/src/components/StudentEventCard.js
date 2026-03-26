@@ -6,8 +6,8 @@ function StudentEventCard({ event }) {
 
     <div className="card">
 
-      {/* Top Banner (Event Name Only) */}
-      <div className="img-box">
+      {}
+      <div className={`img-box ${event.color}`}>
         <div className="event-title-banner">
           {event.title}
         </div>
