@@ -48,4 +48,18 @@ res.json({message:"Event deleted"})
 
 })
 
+// MARK ATTENDANCE
+router.post("/:id/attendance", async(req,res)=>{
+
+const {name,email} = req.body
+
+const event = await Event.findById(req.params.id)
+
+event.attendance.push({name,email})
+
+await event.save()
+
+res.json({message:"Attendance marked"})
+})
+
 module.exports = router

@@ -9,8 +9,12 @@ import ManageEvents from "./pages/ManageEvents"
 import CreateEvent from "./pages/CreateEvent"
 import EditEvent from "./pages/EditEvent"
 import OrganizerDashboard from "./pages/OrganizerDashboard"
-import OrganizerLayout from "./layouts/OrganizerLayout"
-
+import OrganizerCreateEvent from "./pages/OrganizerCreateEvent"
+import OrganizerManageEvents from "./pages/OrganizerManageEvents"
+import OrganizerEditEvent from "./pages/OrganizerEditEvent"
+import Participants from "./pages/Participants"
+import Attendance from "./pages/Attendance"
+import Feedback from "./pages/Feedback"
 import StudentDashboard from "./pages/StudentDashboard"
 
 function App(){
@@ -39,7 +43,12 @@ return(
 <Route path="/admin/create-event" element={<CreateEvent/>}/>
 <Route path="/admin/edit-event/:id" element={<EditEvent/>}/>
 <Route path="/organizer/dashboard" element={<OrganizerDashboard/>}/>
-<Route path="/organizer" element={<OrganizerLayout/>}></Route>
+<Route path="/organizer/create-event" element={<OrganizerCreateEvent/>}/>
+<Route path="/organizer/manage-events" element={<OrganizerManageEvents/>}/>
+<Route path="/organizer/edit-event/:id" element={<OrganizerEditEvent/>}/>
+<Route path="/organizer/participants" element={<Participants/>}/>
+<Route path="/organizer/attendance" element={<Attendance/>}/>
+<Route path="/organizer/feedback" element={<Feedback/>}/>
 </Routes>
 
 </BrowserRouter>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import MainNavbar from "../components/MainNavbar"
 import { getEvents } from "../services/adminApi"
+import OrganizerSidebar from "../components/OrganizerSidebar"
 
 function OrganizerDashboard(){
 
@@ -30,28 +31,12 @@ return(
 
 <div className="flex">
 
-{/* SIDEBAR */}
-<div className="w-64 bg-gray-900 text-white min-h-screen p-6">
-
-<h2 className="text-xl font-bold mb-6">Organizer</h2>
-
-<ul className="space-y-4">
-
-<li className="hover:text-blue-400 cursor-pointer">Dashboard</li>
-<li className="hover:text-blue-400 cursor-pointer">Create Events</li>
-<li className="hover:text-blue-400 cursor-pointer">Manage Events</li>
-<li className="hover:text-blue-400 cursor-pointer">Participants</li>
-<li className="hover:text-blue-400 cursor-pointer">Attendance</li>
-<li className="hover:text-blue-400 cursor-pointer">Feedback</li>
-
-</ul>
-
-</div>
+{/* ✅ REUSABLE SIDEBAR */}
+<OrganizerSidebar/>
 
 {/* MAIN CONTENT */}
 <div className="flex-1 p-8">
 
-{/* HEADER */}
 <div className="bg-white p-4 rounded shadow mb-6 text-center font-semibold">
 Welcome, Event Organizer! Manage and monitor all your campus events here.
 </div>
@@ -84,13 +69,9 @@ Welcome, Event Organizer! Manage and monitor all your campus events here.
 {upcomingEvents.length === 0 ? (
 <p>No upcoming events</p>
 ) : (
-upcomingEvents.slice(0,3).map(event=>(
-<div key={event._id} className="border-b py-3">
-
-<h4 className="font-semibold">{event.title}</h4>
-<p>Date: {event.date}</p>
-<p>Venue: {event.location}</p>
-
+upcomingEvents.map(e=>(
+<div key={e._id} className="border-b py-2">
+{e.title} - {e.date}
 </div>
 ))
 )}
@@ -105,27 +86,23 @@ upcomingEvents.slice(0,3).map(event=>(
 <table className="w-full border">
 
 <thead className="bg-gray-200">
-
 <tr>
 <th>Name</th>
 <th>Event</th>
 <th>Date</th>
 <th>Status</th>
 </tr>
-
 </thead>
 
 <tbody>
 
-{events.flatMap(event => 
+{events.flatMap(event =>
 (event.registeredUsers || []).map((user,i)=>(
 <tr key={i} className="text-center border-t">
-
 <td>{user.name || "Student"}</td>
 <td>{event.title}</td>
 <td>{event.date}</td>
 <td className="text-green-600">Registered</td>
-
 </tr>
 ))
 )}
