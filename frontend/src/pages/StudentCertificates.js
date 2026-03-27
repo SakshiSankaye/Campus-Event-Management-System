@@ -1,28 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import StudentSidebar from "../components/StudentSidebar";
 import Header from "../components/Header";
-import "../styles/dashboard.css";
-
-/*
-  Professional Certificate Page
-*/
+import CertificateCard from "../components/CertificateCard";
+import "../styles/certificates.css";
 
 function StudentCertificates(){
 
+  const [search, setSearch] = useState("");
+
+  // Dummy certificate data
   const certificates = [
     {
       title: "Hackathon Winner",
-      file: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-      type: "pdf",
-      verified: true
+      event: "National Hackathon",
+      date: "March 2025",
+      category: "Technical",
+      verified: true,
+      file: "https://via.placeholder.com/300",
+      link: "https://example.com"
     },
     {
-      title: "Seminar Participation",
-      file: "https://picsum.photos/300/200",
-      type: "image",
-      verified: true
+      title: "Dance Competition",
+      event: "Cultural Fest",
+      date: "Feb 2025",
+      category: "Cultural",
+      verified: false,
+      file: "https://via.placeholder.com/300"
     }
   ];
+
+  const filtered = certificates.filter(c =>
+    c.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return(
 
@@ -32,62 +41,24 @@ function StudentCertificates(){
 
       <div className="main">
 
-        <Header/>
+        <Header search={search} setSearch={setSearch} />
 
         <div className="content">
 
-          {/* Title */}
-          <div className="page-title">
-            My Certificates
-          </div>
+          <div className="page-title">My Certificates</div>
 
-          {/* Horizontal Preview */}
-          <div className="cert-preview-row">
-            {certificates.map((cert, index) => (
-              <div className="preview-item" key={index}>
-                {cert.type === "pdf" ? "📄" : "🖼️"}
-              </div>
-            ))}
-          </div>
-
-          {/* Certificate Grid */}
+          {/* Grid */}
           <div className="cert-grid">
 
-            {certificates.map((cert, index) => (
-
-              <div className="cert-card" key={index}>
-
-                {/* Preview */}
-                {cert.type === "pdf" ? (
-                  <div className="pdf-box">📄 PDF Certificate</div>
-                ) : (
-                  <img src={cert.file} alt="certificate" />
-                )}
-
-                {/* Title */}
-                <p className="cert-title">{cert.title}</p>
-
-                {/* Status */}
-                {cert.verified && (
-                  <span className="cert-badge">✔ Verified</span>
-                )}
-
-                {/* Actions */}
-                <div className="cert-actions">
-
-                  <a href={cert.file} target="_blank" rel="noreferrer">
-                    View
-                  </a>
-
-                  <a href={cert.file} download>
-                    Download
-                  </a>
-
-                </div>
-
+            {filtered.length > 0 ? (
+              filtered.map((cert, index) => (
+                <CertificateCard key={index} cert={cert}/>
+              ))
+            ) : (
+              <div className="empty-state">
+                No certificates found
               </div>
-
-            ))}
+            )}
 
           </div>
 
@@ -97,7 +68,7 @@ function StudentCertificates(){
 
     </div>
 
-  )
+  );
 }
 
 export default StudentCertificates;

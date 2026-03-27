@@ -2,7 +2,7 @@ import React from "react";
 import StudentSidebar from "../components/StudentSidebar";
 import Header from "../components/Header";
 import "../styles/dashboard.css";
-
+import { useEffect, useState } from "react";
 /*
   Student My Events Page
 */
@@ -10,10 +10,19 @@ import "../styles/dashboard.css";
 function StudentMyEvents(){
 
   // Sample data (later from backend)
-  const registered = [
-    { name: "Hackathon", date: "18 March" },
-    { name: "Seminar", date: "25 March" }
-  ];
+const [registered, setRegistered] = useState([]);
+
+useEffect(() => {
+  const stored = JSON.parse(localStorage.getItem("registeredEvents")) || [];
+  
+  const formatted = stored.map(e => ({
+    name: e,
+    date: "Upcoming"
+  }));
+
+  setRegistered(formatted);
+
+}, []);
 
   const ongoing = [
     { name: "Coding Contest", date: "Today" }

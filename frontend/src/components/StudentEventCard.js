@@ -1,22 +1,27 @@
 import React from "react";
 
-function StudentEventCard({ event }) {
+function StudentEventCard({ event, onRegister, isRegistered }) {
 
   return (
 
     <div className="card">
 
-      {}
-      <div className={`img-box ${event.color}`}>
-        <div className="event-title-banner">
-          {event.title}
-        </div>
+      {/* Banner instead of image */}
+      <div className={`event-banner ${event.color}`}>
+        {event.title}
       </div>
-      <p><b> Title:</b> {event.title}</p>
-      <p><b> Date:</b> {event.date}</p>
-      <p><b> Location:</b> {event.location}</p>
 
-      <button className="btn">Register</button>
+      {/* Details */}
+      <p><b>Date:</b> {event.date}</p>
+      <p><b>Location:</b> {event.location}</p>
+
+      {/* Button */}
+      <button
+        className="btn"
+        onClick={() => onRegister(event.title)}
+      >
+        {isRegistered ? "Registered ✔" : "Register"}
+      </button>
 
     </div>
 

@@ -5,31 +5,28 @@ import StudentEventCard from "../components/StudentEventCard";
 import "../styles/dashboard.css";
 
 function StudentDashboard(){
-
+const user = JSON.parse(localStorage.getItem("user"));
 const events = [
   {
     title: "Hackathon",
     date: "18 March",
     location: "Auditorium",
-    color: "brown"
+    category: "Technical",
+    color: "technical"
   },
   {
-    title: "Seminar",
-    date: "25 March",
-    location: "Hall A",
-    color: "green"
+    title: "Dance Fest",
+    date: "20 March",
+    location: "Main Hall",
+    category: "Cultural",
+    color: "cultural"
   },
   {
-    title: "Coding Contest",
-    date: "30 March",
-    location: "Lab 2",
-    color: "purple"
-  },
-  {
-    title: "Tech Fest",
-    date: "5 April",
-    location: "Campus Ground",
-    color: "orange"
+    title: "Football Match",
+    date: "22 March",
+    location: "Ground",
+    category: "Sports",
+    color: "sports"
   }
 ];
 
@@ -46,8 +43,8 @@ return(
     <div className="content">
 
       <div className="welcome-box">
-        Welcome! Explore and register for upcoming campus events.
-      </div>
+  Welcome {user?.name} 👋
+</div>
 
       {/* ✅ USE MAP HERE */}
       <div className="event-grid">

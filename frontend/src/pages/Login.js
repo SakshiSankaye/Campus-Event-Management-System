@@ -18,7 +18,7 @@ const res = await axios.post(
 "http://localhost:5000/api/auth/login",
 {email,password}
 )
-localStorage.setItem("user", JSON.stringify(res.data.user))  // ✅
+localStorage.setItem("user", JSON.stringify(res.data.user));
 
 const role = res.data.user.role
 

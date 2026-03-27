@@ -11,6 +11,16 @@ body{
   height:100vh;
 }
 
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.content{
+  padding:25px;
+}
+
 /* ================= SIDEBAR ================= */
 .sidebar{
   width:240px;
@@ -19,7 +29,6 @@ body{
   padding:20px;
 }
 
-/* Logo section */
 .logo-box{
   height:80px;
   background:#334155;
@@ -41,11 +50,9 @@ body{
 }
 
 .logo-text{
-  margin:0;
   font-size:16px;
 }
 
-/* Sidebar menu */
 .menu{
   list-style:none;
   padding:0;
@@ -54,27 +61,10 @@ body{
 .menu li{
   margin:18px 0;
   cursor:pointer;
-  transition:0.3s;
 }
 
 .menu li:hover{
   color:#38bdf8;
-}
-.menu li.active{
-  
-  color:white;
-  padding:8px;
-  border-radius:6px;
-}
-.menu li.active:hover{
-  background:#334155;
-  color:#38bdf8;
-}
-/* ================= MAIN ================= */
-.main{
-  flex:1;
-  display:flex;
-  flex-direction:column;
 }
 
 /* ================= HEADER ================= */
@@ -101,19 +91,11 @@ body{
 }
 
 /* ================= CONTENT ================= */
-.content{
-  padding:25px;
-}
-
-/* Welcome section */
-.welcome-box{
-  background:linear-gradient(135deg,#1e293b,#334155);
-  color:white;
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
-  font-weight:500;
-  margin-bottom:25px;
+.page-title{
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:20px;
+  color:#1e293b;
 }
 
 /* ================= EVENT GRID ================= */
@@ -136,53 +118,52 @@ body{
   transform:translateY(-5px);
 }
 
-/* Event banner (top box) */
-.img-box{
-  height:100px;
-  border-radius:12px;
+/* Banner */
+.event-banner{
+  height:80px;
+  border-radius:10px;
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-weight:600;
   margin-bottom:10px;
-  color:white;
 }
 
-/* Event title */
-.event-title-banner{
-  font-size:18px;
-  font-weight:600;
-  text-align:center;
+/* Colors */
+.event-banner.technical{
+  background:linear-gradient(135deg,#2563eb,#3b82f6);
+}
+
+.event-banner.cultural{
+  background:linear-gradient(135deg,#db2777,#f472b6);
+}
+
+.event-banner.sports{
+  background:linear-gradient(135deg,#16a34a,#4ade80);
+}
+
+.event-banner.seminar{
+  background:linear-gradient(135deg,#7c3aed,#a78bfa);
+}
+
+.event-banner.orange{
+  background:linear-gradient(135deg,#ea580c,#fbbf24);
 }
 
 /* Button */
 .btn{
   margin-top:10px;
   padding:8px 12px;
-  background:#2563eb; 
+  background:#2563eb;
   color:white;
   border:none;
   border-radius:6px;
   cursor:pointer;
 }
+
 .btn:hover{
   background:#1d4ed8;
-}
-/* Soft Professional Card Colors */
-
-.img-box.brown{
-  background:linear-gradient(135deg,#554746,#554746);
-}
-
-.img-box.green{
-  background:linear-gradient(135deg,#059669,#10b981);
-}
-
-.img-box.purple{
-  background:linear-gradient(135deg,#7c3aed,#8b5cf6);
-}
-
-.img-box.orange{
-  background:linear-gradient(135deg,#ea580c,#f97316);
 }
 
 /* ================= REGISTERED EVENTS ================= */
@@ -198,24 +179,9 @@ body{
   width:60%;
 }
 
-/* Page Title */
+/* ================= STUDENT MY EVENTS ================= */
 
-.page-title{
-  font-size:22px;
-  font-weight:600;
-  margin-bottom:20px;
-  color:#1e293b;
-}
-
-/* ===== Page Title ===== */
-.page-title{
-  font-size:22px;
-  font-weight:600;
-  margin-bottom:20px;
-  color:#1e293b;
-}
-
-/* ===== Sections ===== */
+/* Section */
 .event-section{
   background:white;
   padding:20px;
@@ -237,7 +203,7 @@ body{
   border-left:6px solid #10b981;
 }
 
-/* ===== Table Styling ===== */
+/* Table */
 table{
   width:100%;
   border-collapse:collapse;
@@ -260,7 +226,11 @@ tr:nth-child(even){
 tr:hover{
   background:#e2e8f0;
 }
-/* ===== Certificate Preview Row ===== */
+
+
+/* ================= CERTIFICATE PAGE ================= */
+
+/* Preview Row (top small icons) */
 .cert-preview-row{
   display:flex;
   gap:10px;
@@ -278,7 +248,7 @@ tr:hover{
   font-size:24px;
 }
 
-/* ===== Grid ===== */
+/* Grid */
 .cert-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -302,7 +272,7 @@ tr:hover{
   border-radius:8px;
 }
 
-/* PDF Box */
+/* PDF box */
 .pdf-box{
   height:150px;
   display:flex;
@@ -351,6 +321,113 @@ tr:hover{
   background:#1e40af;
 }
 
+
+/* ================= EXTRA CERT STYLES (FULL VERSION) ================= */
+
+/* Secondary layout */
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.cert-card{
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  text-align:center;
+}
+
+.cert-card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.pdf-box{
+  height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f1f5f9;
+  border-radius:8px;
+  font-weight:600;
+}
+
+.cert-title{
+  margin-top:10px;
+  font-weight:600;
+}
+
+.cert-badge{
+  display:inline-block;
+  margin-top:5px;
+  background:#10b981;
+  color:white;
+  padding:3px 8px;
+  border-radius:6px;
+  font-size:12px;
+}
+
+.cert-actions{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.cert-actions a{
+  padding:6px 10px;
+  background:#2563eb;
+  color:white;
+  border-radius:6px;
+  text-decoration:none;
+  font-size:12px;
+}
+
+.cert-actions a:hover{
+  background:#1e40af;
+}
+
+
+/* ================= CERT CATEGORY COLORS ================= */
+
+.cert-badge.technical{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.cert-badge.cultural{
+  background:#fce7f3;
+  color:#be185d;
+}
+
+.cert-badge.sports{
+  background:#dcfce7;
+  color:#166534;
+}
+
+
+/* ================= VERIFIED ================= */
+
+.cert-verified{
+  display:block;
+  margin-top:5px;
+  color:#10b981;
+  font-size:12px;
+}
+
+
+/* ================= EMPTY STATE ================= */
+
+.empty-state{
+  text-align:center;
+  color:gray;
+  margin-top:20px;
+}
+
 /* ===== Feedback Form Box ===== */
 .feedback-box{
   background:white;
@@ -372,12 +449,13 @@ tr:hover{
   font-size:14px;
 }
 
+/* Textarea */
 .feedback-box textarea{
   min-height:80px;
   resize:none;
 }
 
-/* Rating */
+/* Rating stars */
 .rating-box{
   display:flex;
   gap:5px;
@@ -408,7 +486,7 @@ tr:hover{
   background:#1e40af;
 }
 
-/* ===== Feedback History ===== */
+/* ===== Feedback History Section ===== */
 .feedback-history{
   background:white;
   padding:20px;
@@ -416,6 +494,7 @@ tr:hover{
   box-shadow:0 4px 10px rgba(0,0,0,0.05);
 }
 
+/* Table */
 .feedback-history table{
   width:100%;
   margin-top:10px;
@@ -432,6 +511,316 @@ tr:hover{
   background:#f1f5f9;
 }
 
+.feedback-history tr:nth-child(even){
+  background:#f9fafb;
+}
+
 .feedback-history tr:hover{
   background:#e2e8f0;
+}
+
+/* ===== Dropdown spacing (raw style) ===== */
+.feedback-box select{
+  width:auto;
+}
+
+/* ===== Extra spacing fixes (original loose style) ===== */
+.feedback-box textarea{
+  width:auto;
+}
+
+/* ===== Rating label spacing ===== */
+.rating-box{
+  margin-top:5px;
+}
+
+/* ===== Button alignment (original feel) ===== */
+.submit-btn{
+  width:auto;
+}
+
+/* ===== Title spacing ===== */
+.page-title{
+  margin-bottom:20px;
+}
+
+/* ===== Previous Feedback text ===== */
+.feedback-history h3{
+  margin-bottom:10px;
+}
+
+/* ================= CERTIFICATE GRID ================= */
+
+.cert-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:25px;
+}
+
+
+/* ================= CERTIFICATE CARD ================= */
+
+.cert-card{
+  background:white;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+  transition:0.3s;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.cert-card:hover{
+  transform:translateY(-5px);
+}
+
+
+/* ================= CERT IMAGE ================= */
+
+.cert-img{
+  width:100%;
+  height:160px;
+  border-radius:10px;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+
+/* ================= PDF BOX (if no image) ================= */
+
+.pdf-box{
+  height:160px;
+  background:#f1f5f9;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+  color:#475569;
+  margin-bottom:15px;
+}
+
+
+/* ================= CERT TEXT ================= */
+
+.cert-title{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+.cert-sub{
+  font-size:14px;
+  color:#64748b;
+}
+
+.cert-date{
+  font-size:13px;
+  color:#94a3b8;
+  margin-top:5px;
+}
+
+
+/* ================= BADGES ================= */
+
+.cert-badge{
+  display:inline-block;
+  margin-top:10px;
+  padding:4px 10px;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:500;
+}
+
+.cert-badge.technical{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
+
+.cert-badge.cultural{
+  background:#fce7f3;
+  color:#be185d;
+}
+
+.cert-badge.sports{
+  background:#dcfce7;
+  color:#166534;
+}
+
+
+/* ================= VERIFIED ================= */
+
+.cert-verified{
+  margin-top:8px;
+  color:#16a34a;
+  font-size:13px;
+}
+
+
+/* ================= ACTION BUTTONS ================= */
+
+.cert-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border-top:1px solid #e2e8f0;
+  padding-top:15px;
+}
+
+/* Buttons */
+.cert-actions a{
+  flex:1;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+  font-size:14px;
+}
+
+/* View */
+.view-btn{
+  background:#10b981;
+}
+
+/* Download */
+.download-btn{
+  background:#6366f1;
+}
+
+/* Link */
+.link-btn{
+  background:#f59e0b;
+}
+
+/* Hover */
+.cert-actions button:hover{
+  opacity:0.9;
+}
+
+/* ===== CERTIFICATE TITLE BOX (INSTEAD OF IMAGE) ===== */
+
+.cert-banner{
+  height:120px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:600;
+  color:white;
+  margin-bottom:15px;
+}
+
+/* Different colors */
+.cert-banner.technical{
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+}
+
+.cert-banner.cultural{
+  background:linear-gradient(135deg,#ec4899,#be185d);
+}
+
+.cert-banner.sports{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.cert-actions a{
+  color: white !important;
+  font-weight: 500;
+}
+
+.view-btn{
+  background:#10b981 !important;
+}
+
+.download-btn{
+  background:#6366f1 !important;
+}
+
+.link-btn{
+  background:#f59e0b !important;
+}
+
+/* ICON WRAPPER */
+.icon-box{
+  position:relative;
+  cursor:pointer;
+}
+
+/* DROPDOWN */
+.dropdown{
+  position:absolute;
+  top:30px;
+  right:0;
+  background:white;
+  border-radius:10px;
+  padding:10px;
+  width:180px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+  z-index:100;
+}
+
+/* ITEMS */
+.dropdown p{
+  margin:8px 0;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.dropdown p:hover{
+  color:#3b82f6;
+}
+
+/* PROFILE */
+.profile-card{
+  background:white;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  width:300px;
+}
+
+.profile-avatar{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:#3b82f6;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  margin:0 auto 10px;
+}
+
+/* SETTINGS */
+.settings-card{
+  background:white;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  width:350px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.settings-card input{
+  padding:10px;
+  border-radius:8px;
+  border:1px solid #ddd;
+}
+
+.settings-card button{
+  margin-top:10px;
+  padding:10px;
+  background:#3b82f6;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
