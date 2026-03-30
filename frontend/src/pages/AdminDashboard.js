@@ -3,7 +3,7 @@ import AdminSidebar from "../components/AdminSidebar"
 import AdminNavbar from "../components/MainNavbar"
 import {getStats} from "../services/adminApi"
 
-import {BarChart,Bar,XAxis,YAxis,Tooltip,CartesianGrid} from "recharts"
+import {BarChart,Bar,XAxis,YAxis,Tooltip,CartesianGrid,ResponsiveContainer} from "recharts"
 
 function AdminDashboard(){
 
@@ -40,33 +40,44 @@ return(
 
 <div className="p-8">
 
-<h2 className="text-2xl font-bold mb-6">
-Dashboard
-</h2>
+<h2 className="text-3xl font-bold mb-8">Admin Dashboard</h2>
 
-<div className="grid grid-cols-3 gap-6 mb-8">
+{/* 🔥 STATS */}
+<div className="grid grid-cols-3 gap-6 mb-10">
 
-<div className="bg-blue-500 text-white p-6 rounded">
-Users {stats.users}
+<div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-xl shadow-lg">
+<h3 className="text-lg">Total Users</h3>
+<p className="text-3xl font-bold">{stats.users}</p>
 </div>
 
-<div className="bg-green-500 text-white p-6 rounded">
-Events {stats.events}
+<div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-xl shadow-lg">
+<h3 className="text-lg">Total Events</h3>
+<p className="text-3xl font-bold">{stats.events}</p>
 </div>
 
-<div className="bg-purple-500 text-white p-6 rounded">
-Registrations {stats.registrations}
+<div className="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-xl shadow-lg">
+<h3 className="text-lg">Registrations</h3>
+<p className="text-3xl font-bold">{stats.registrations}</p>
 </div>
 
 </div>
 
-<BarChart width={500} height={300} data={chartData}>
+{/* 🔥 CHART */}
+<div className="bg-white p-6 rounded-xl shadow-lg">
+
+<h3 className="text-xl font-semibold mb-4">Analytics</h3>
+
+<ResponsiveContainer width="100%" height={300}>
+<BarChart data={chartData}>
 <CartesianGrid strokeDasharray="3 3"/>
 <XAxis dataKey="name"/>
 <YAxis/>
 <Tooltip/>
-<Bar dataKey="value" fill="#8884d8"/>
+<Bar dataKey="value"/>
 </BarChart>
+</ResponsiveContainer>
+
+</div>
 
 </div>
 
