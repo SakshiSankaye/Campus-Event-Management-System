@@ -8,7 +8,8 @@ function Login(){
 const navigate = useNavigate()
 
 const [email,setEmail] = useState("")
-const [password,setPassword] = useState("")
+const [password,setPassword] = useState("")   // ✅ FIX
+const [showPassword,setShowPassword] = useState(false)
 
 const login = async ()=>{
 
@@ -18,21 +19,18 @@ const res = await axios.post(
 "http://localhost:5000/api/auth/login",
 {email,password}
 )
-localStorage.setItem("user", JSON.stringify(res.data.user));
+
+localStorage.setItem("user", JSON.stringify(res.data.user))
 
 const role = res.data.user.role
 
 if(role==="student") navigate("/student/dashboard")
-
 if(role==="organizer") navigate("/organizer/dashboard")
-
 if(role==="admin") navigate("/admin/dashboard")
 
 }
 catch(err){
-
 alert("Invalid login")
-
 }
 
 }
@@ -50,11 +48,18 @@ placeholder="Email"
 onChange={(e)=>setEmail(e.target.value)}
 />
 
+{/* 🔥 PASSWORD FIELD */}
+<div className="password-field">
 <input
-type="password"
+type={showPassword ? "text" : "password"}
 placeholder="Password"
 onChange={(e)=>setPassword(e.target.value)}
 />
+
+<span onClick={()=>setShowPassword(!showPassword)}>
+{showPassword ? "🙈" : "👁️"}
+</span>
+</div>
 
 <button className="auth-btn" onClick={login}>
 Login
@@ -62,15 +67,15 @@ Login
 
 <div className="auth-line">OR</div>
 
-<span
-className="auth-link"
-onClick={()=>navigate("/signup")}
->
+<span onClick={()=>navigate("/forgot-password")} className="auth-link">
+Forgot Password?
+</span>
+
+<span onClick={()=>navigate("/signup")} className="auth-link">
 Don't have an account? Signup
 </span>
 
 </div>
-
 </div>
 
 )

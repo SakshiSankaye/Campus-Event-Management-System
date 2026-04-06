@@ -22,7 +22,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["student","organizer","admin"],
     default: "student"
-  }
+  },
+
+  // ⭐ ADD THESE TWO LINES
+  resetToken: String,
+  resetTokenExpire: Date
 
 })
 

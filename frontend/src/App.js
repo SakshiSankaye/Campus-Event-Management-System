@@ -2,7 +2,8 @@ import {BrowserRouter,Routes,Route,Navigate} from "react-router-dom"
 
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-
+import ForgotPassword from "./pages/ForgotPassword"
+import ResetPassword from "./pages/ResetPassword"
 import AdminDashboard from "./pages/AdminDashboard"
 import ManageUsers from "./pages/ManageUsers"
 import ManageEvents from "./pages/ManageEvents"
@@ -61,6 +62,8 @@ return(
 <Route path="/organizer/participants" element={<Participants/>}/>
 <Route path="/organizer/attendance" element={<Attendance/>}/>
 <Route path="/organizer/feedback" element={<Feedback/>}/>
+<Route path="/forgot-password" element={<ForgotPassword/>}/>
+<Route path="/reset-password/:token" element={<ResetPassword/>}/>
 </Routes>
 
 </BrowserRouter>

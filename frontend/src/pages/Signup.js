@@ -5,93 +5,101 @@ import "../styles/auth.css"
 
 function Signup(){
 
-  const navigate = useNavigate()
+const navigate = useNavigate()
 
-  const [name,setName] = useState("")
-  const [email,setEmail] = useState("")
-  const [password,setPassword] = useState("")
-  const [role,setRole] = useState("student")
+const [name,setName] = useState("")
+const [email,setEmail] = useState("")
+const [password,setPassword] = useState("")   // ✅ FIX
+const [showPassword,setShowPassword] = useState(false)
+const [role,setRole] = useState("student")
 
-  const signup = async () => {
+// 🔥 PASSWORD STRENGTH
+const getStrength = (password)=>{
+if(password.length < 6) return "Weak"
+if(password.match(/[A-Z]/) && password.match(/[0-9]/)) return "Strong"
+return "Medium"
+}
 
-    try{
+const signup = async ()=>{
 
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        { name, email, password, role }
-      )
+try{
 
-      alert(res.data.message)
+const res = await axios.post(
+"http://localhost:5000/api/auth/signup",
+{ name, email, password, role }
+)
 
-      navigate("/")
+alert(res.data.message)
+navigate("/")
 
-    }
-    catch(err){
+}catch(err){
+alert(err.response?.data?.message || "Signup failed")
+}
 
-      console.log(err.response?.data)
+}
 
-      alert(err.response?.data?.message || "Signup failed")
+return(
 
-    }
+<div className="auth-container">
 
-  }
+<div className="auth-card">
 
-  return(
+<h2>Create Account</h2>
 
-    <div className="auth-container">
+<input
+placeholder="Name"
+value={name}
+onChange={(e)=>setName(e.target.value)}
+/>
 
-      <div className="auth-card">
+<input
+placeholder="Email"
+value={email}
+onChange={(e)=>setEmail(e.target.value)}
+/>
 
-        <h2>Create Account</h2>
+{/* 🔥 PASSWORD FIELD */}
+<div className="password-field">
 
-        <input
-          placeholder="Name"
-          value={name}
-          onChange={(e)=>setName(e.target.value)}
-        />
+<input
+type={showPassword ? "text" : "password"}
+placeholder="Password"
+value={password}
+onChange={(e)=>setPassword(e.target.value)}
+/>
 
-        <input
-          placeholder="Email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-        />
+<span onClick={()=>setShowPassword(!showPassword)}>
+{showPassword ? "🙈" : "👁️"}
+</span>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-        />
+</div>
 
-        <select
-          value={role}
-          onChange={(e)=>setRole(e.target.value)}
-        >
+{/* 🔥 STRENGTH */}
+<p className={`strength ${getStrength(password).toLowerCase()}`}>
+{getStrength(password)} Password
+</p>
 
-          <option value="student">Student</option>
-          <option value="organizer">Organizer</option>
-          <option value="admin">Admin</option>
+<select value={role} onChange={(e)=>setRole(e.target.value)}>
+<option value="student">Student</option>
+<option value="organizer">Organizer</option>
+<option value="admin">Admin</option>
+</select>
 
-        </select>
+<button className="auth-btn" onClick={signup}>
+Signup
+</button>
 
-        <button className="auth-btn" onClick={signup}>
-          Signup
-        </button>
+<div className="auth-line">OR</div>
 
-        <div className="auth-line">OR</div>
+<span className="auth-link" onClick={()=>navigate("/")}>
+Already have an account? Login
+</span>
 
-        <span
-          className="auth-link"
-          onClick={()=>navigate("/")}
-        >
-          Already have an account? Login
-        </span>
+</div>
 
-      </div>
+</div>
 
-    </div>
-
-  )
+)
 
 }
 
