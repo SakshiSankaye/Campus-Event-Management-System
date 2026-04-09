@@ -953,3 +953,305 @@ border:none;
 border-radius:6px;
 cursor:pointer;
 }
+/* GLOBAL */
+.content{
+padding:20px 30px;
+background:#f5f7fb;
+}
+
+/* HEADER TEXT */
+.dash-title{
+font-size:26px;
+font-weight:700;
+margin-bottom:4px;
+}
+
+.dash-sub{
+color:#888;
+margin-bottom:20px;
+}
+
+/* STATS */
+.stats-modern{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+margin-bottom:25px;
+}
+
+.stat-box{
+padding:20px;
+border-radius:14px;
+color:white;
+font-weight:600;
+transition:0.3s;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.stat-box h2{
+font-size:22px;
+margin-bottom:5px;
+}
+
+.stat-box:hover{
+transform:translateY(-3px);
+}
+
+.blue{background:linear-gradient(135deg,#4f6df5,#6c8cff);}
+.purple{background:linear-gradient(135deg,#9b59b6,#c084fc);}
+.orange{background:linear-gradient(135deg,#f39c12,#fbbf24);}
+.green{background:linear-gradient(135deg,#2ecc71,#34d399);}
+
+/* SECTION */
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:20px 0;
+font-weight:600;
+}
+
+.section-title span{
+color:#6c5ce7;
+cursor:pointer;
+font-size:14px;
+}
+
+/* EVENT GRID */
+.event-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+/* EVENT CARD */
+.event-card-modern{
+background:white;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.event-card-modern:hover{
+transform:translateY(-5px);
+}
+
+.event-img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+/* CARD BODY */
+.event-body{
+padding:14px;
+}
+
+.tag{
+background:#eef2ff;
+color:#4f46e5;
+padding:4px 10px;
+border-radius:8px;
+font-size:12px;
+display:inline-block;
+margin-bottom:6px;
+}
+
+.event-body h4{
+font-size:16px;
+margin:5px 0;
+font-weight:600;
+}
+
+.event-body p{
+font-size:13px;
+color:#666;
+margin:3px 0;
+}
+
+/* BUTTON */
+.btn-primary{
+width:100%;
+margin-top:10px;
+background:linear-gradient(135deg,#4f6df5,#6c5ce7);
+color:white;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.btn-primary:hover{
+opacity:0.9;
+}
+
+.btn-disabled{
+width:100%;
+margin-top:10px;
+background:#ccc;
+border:none;
+padding:10px;
+border-radius:8px;
+}
+
+/* BOTTOM SECTION */
+.bottom-section{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+margin-top:25px;
+}
+
+/* ACTIVITY */
+.activity-box{
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.activity-box h3{
+margin-bottom:10px;
+}
+
+.activity-box ul{
+padding-left:0;
+list-style:none;
+}
+
+.activity-box li{
+margin-bottom:8px;
+color:#555;
+}
+
+/* RECOMMEND */
+.recommend-box{
+background:linear-gradient(135deg,#6c5ce7,#8b5cf6);
+color:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.recommend-box h3{
+margin-bottom:10px;
+}
+
+.explore-btn{
+margin-top:10px;
+background:white;
+color:#6c5ce7;
+border:none;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+width:100%;
+font-weight:600;
+}
+/* HEADER */
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+padding:12px 20px;
+border-radius:14px;
+box-shadow:0 4px 15px rgba(0,0,0,0.05);
+margin-bottom:15px;
+}
+
+/* LOGO */
+.logo{
+font-size:20px;
+font-weight:bold;
+color:#4f46e5;
+}
+
+/* RIGHT SECTION */
+.right-section{
+display:flex;
+align-items:center;
+gap:20px;
+}
+
+/* SEARCH */
+.search-box{
+display:flex;
+align-items:center;
+background:#f1f5f9;
+padding:8px 12px;
+border-radius:10px;
+gap:8px;
+}
+
+.search-box input{
+border:none;
+outline:none;
+background:transparent;
+}
+
+.search-icon{
+color:#888;
+}
+
+/* ICON */
+.icon{
+font-size:18px;
+cursor:pointer;
+}
+
+/* BADGE */
+.badge{
+position:absolute;
+top:-5px;
+right:-5px;
+background:red;
+color:white;
+font-size:10px;
+padding:2px 6px;
+border-radius:50%;
+}
+
+/* ICON BOX */
+.icon-box{
+position:relative;
+cursor:pointer;
+}
+
+/* AVATAR */
+.avatar{
+width:36px;
+height:36px;
+border-radius:50%;
+object-fit:cover;
+cursor:pointer;
+border:2px solid #eee;
+}
+
+/* DROPDOWN */
+.dropdown{
+position:absolute;
+top:45px;
+right:0;
+background:white;
+padding:12px;
+border-radius:12px;
+box-shadow:0 6px 20px rgba(0,0,0,0.1);
+width:220px;
+z-index:100;
+}
+
+.user-name{
+font-weight:bold;
+}
+
+.user-email{
+font-size:12px;
+color:gray;
+}
+
+.logout{
+color:red;
+}

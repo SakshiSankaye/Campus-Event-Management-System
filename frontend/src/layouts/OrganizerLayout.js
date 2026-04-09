@@ -24,7 +24,7 @@ return(
 Dashboard
 </li>
 
-<li onClick={()=>navigate("/organizer/create-event")} className="cursor-pointer hover:text-blue-400">
+<li onClick={()=>navigate("/organizer/Create-Event")} className="cursor-pointer hover:text-blue-400">
 Create Events
 </li>
 

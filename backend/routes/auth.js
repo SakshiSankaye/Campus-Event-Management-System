@@ -169,5 +169,17 @@ router.post("/reset-password/:token", async (req, res) => {
     res.status(500).json({ message: "Server error" })
   }
 })
+router.post("/change-password/:id", async(req,res)=>{
 
+const {password} = req.body
+
+const hashedPassword = await bcrypt.hash(password,10)
+
+await User.findByIdAndUpdate(req.params.id,{
+password: hashedPassword
+})
+
+res.json({message:"Password updated"})
+
+})
 module.exports = router

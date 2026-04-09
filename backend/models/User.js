@@ -26,8 +26,8 @@ const UserSchema = new mongoose.Schema({
 
   // ⭐ ADD THESE TWO LINES
   resetToken: String,
-  resetTokenExpire: Date
-
+  resetTokenExpire: Date,
+  profilePic: String
 })
 
 module.exports = mongoose.model("User", UserSchema)

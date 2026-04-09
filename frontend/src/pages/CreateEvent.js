@@ -1,12 +1,14 @@
-import {useState} from "react"
-import {useNavigate} from "react-router-dom"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import AdminSidebar from "../components/AdminSidebar"
 import AdminNavbar from "../components/MainNavbar"
-import {createEvent} from "../services/adminApi"
+import { createEvent } from "../services/adminApi"
 
 function CreateEvent(){
 
 const navigate = useNavigate()
+
+const [preview,setPreview] = useState(null)
 
 const [form,setForm]=useState({
 title:"",
@@ -15,31 +17,41 @@ date:"",
 time:"",
 location:"",
 category:"",
+type:"Offline",
+link:"",
 maxParticipants:"",
+deadline:"",
+tags:"",
 image:null
 })
 
+// HANDLE INPUT
 const handleChange = (e)=>{
 setForm({...form,[e.target.name]:e.target.value})
 }
 
+// IMAGE
 const handleImage = (e)=>{
-setForm({...form,image:e.target.files[0]})
+const file = e.target.files[0]
+setForm({...form,image:file})
+
+if(file){
+setPreview(URL.createObjectURL(file))
+}
 }
 
+// SUBMIT
 const submit = async(e)=>{
 e.preventDefault()
 
-// simple validation
 if(!form.title || !form.date){
-alert("Fill required fields")
+alert("Please fill required fields")
 return
 }
 
 await createEvent(form)
 
-alert("Event Created")
-
+alert("Event Created Successfully 🚀")
 navigate("/admin/events")
 }
 
@@ -57,23 +69,34 @@ return(
 
 <h2 className="text-3xl font-bold mb-6">Create Event</h2>
 
-<form onSubmit={submit} className="bg-white p-6 rounded-xl shadow-lg space-y-4 max-w-2xl">
+<form onSubmit={submit} className="bg-white p-6 rounded-xl shadow-lg space-y-6 max-w-4xl">
+
+{/* 🔥 BASIC INFO */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Basic Information</h3>
 
 <input
 name="title"
 placeholder="Event Title"
-className="border p-2 w-full"
+className="border p-2 w-full mb-3"
 onChange={handleChange}
 />
 
 <textarea
 name="description"
-placeholder="Description"
+placeholder="Event Description"
 className="border p-2 w-full"
+rows="3"
 onChange={handleChange}
 />
 
-<div className="grid grid-cols-2 gap-4">
+</div>
+
+{/* 🔥 DATE & TIME */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Schedule</h3>
+
+<div className="grid grid-cols-3 gap-4">
 
 <input
 type="date"
@@ -89,25 +112,87 @@ className="border p-2"
 onChange={handleChange}
 />
 
-</div>
-
 <input
-name="location"
-placeholder="Location"
-className="border p-2 w-full"
+type="date"
+name="deadline"
+className="border p-2"
+placeholder="Registration Deadline"
 onChange={handleChange}
 />
 
+</div>
+
+</div>
+
+{/* 🔥 LOCATION / MODE */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Location & Mode</h3>
+
+<div className="grid grid-cols-2 gap-4">
+
+<select
+name="type"
+className="border p-2"
+onChange={handleChange}
+>
+<option value="Offline">Offline</option>
+<option value="Online">Online</option>
+</select>
+
+<input
+name="location"
+placeholder="Location / Venue"
+className="border p-2"
+onChange={handleChange}
+/>
+
+</div>
+
+{/* ONLINE LINK */}
+{form.type === "Online" && (
+<input
+name="link"
+placeholder="Meeting Link (Google Meet / Zoom)"
+className="border p-2 w-full mt-3"
+onChange={handleChange}
+/>
+)}
+
+</div>
+
+{/* 🔥 CATEGORY & TAGS */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Category</h3>
+
+<div className="grid grid-cols-2 gap-4">
+
 <select
 name="category"
-className="border p-2 w-full"
+className="border p-2"
 onChange={handleChange}
 >
 <option value="">Select Category</option>
 <option value="Technical">Technical</option>
 <option value="Cultural">Cultural</option>
 <option value="Sports">Sports</option>
+<option value="Workshop">Workshop</option>
+<option value="Seminar">Seminar</option>
 </select>
+
+<input
+name="tags"
+placeholder="Tags (AI, Coding, Dance)"
+className="border p-2"
+onChange={handleChange}
+/>
+
+</div>
+
+</div>
+
+{/* 🔥 PARTICIPANTS */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Participants</h3>
 
 <input
 type="number"
@@ -117,7 +202,12 @@ className="border p-2 w-full"
 onChange={handleChange}
 />
 
+</div>
+
 {/* 🔥 IMAGE UPLOAD */}
+<div>
+<h3 className="text-xl font-semibold mb-3">Event Poster</h3>
+
 <input
 type="file"
 accept="image/*"
@@ -125,8 +215,20 @@ onChange={handleImage}
 className="border p-2 w-full"
 />
 
-<button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded w-full">
-Create Event
+{/* PREVIEW */}
+{preview && (
+<img
+src={preview}
+alt="preview"
+className="mt-4 w-full h-48 object-cover rounded"
+/>
+)}
+
+</div>
+
+{/* 🔥 SUBMIT */}
+<button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded w-full text-lg">
+Create Event 🚀
 </button>
 
 </form>

@@ -23,6 +23,7 @@ import StudentCertificates from "./pages/StudentCertificates";
 import StudentFeedback from "./pages/StudentFeedback";
 import StudentProfile from "./pages/StudentProfile";
 import StudentSettings from "./pages/StudentSettings";
+import Profile from "./pages/Profile"
 
 function App(){
 
@@ -44,6 +45,7 @@ return(
 <Route path="/student-feedback" element={<StudentFeedback />} />
 <Route path="/student-profile" element={<StudentProfile/>}/>
 <Route path="/student-settings" element={<StudentSettings/>}/>
+<Route path="/profile" element={<Profile/>}/>
 
 {/* ORGANIZER */}
 

@@ -15,7 +15,9 @@ Admin Panel
 <li><Link to="/admin">Dashboard</Link></li>
 <li><Link to="/admin/events">Events</Link></li>
 <li><Link to="/admin/users">Users</Link></li>
-
+<li onClick={()=>navigate("/profile")} className="cursor-pointer">
+Profile
+</li>
 </ul>
 
 </div>

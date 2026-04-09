@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import MainNavbar from "../components/MainNavbar"
+import Header from "../components/Header"
 import OrganizerSidebar from "../components/OrganizerSidebar"
 import { getEvents, deleteEvent } from "../services/adminApi"
-
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts"
 function OrganizerDashboard(){
 
 const [events,setEvents] = useState([])
+const [search,setSearch] = useState("")
 const navigate = useNavigate()
 
 useEffect(()=>{
@@ -28,7 +29,9 @@ e => new Date(e.date) > new Date()
 const totalParticipants = events.reduce(
 (sum,e)=> sum + (e.registeredUsers?.length || 0),0
 )
-
+const filteredEvents = events.filter(e =>
+  e.title.toLowerCase().includes(search.toLowerCase())
+)
 // SAMPLE IMAGES
 const images = [
 "https://images.unsplash.com/photo-1523580494863-6f3031224c94",
@@ -44,12 +47,18 @@ await deleteEvent(id)
 loadEvents()
 }
 }
-
+const getStatus = (date)=>{
+  return new Date(date) > new Date() ? "Upcoming" : "Completed"
+}
+const chartData = events.map(e => ({
+  name: e.title,
+  participants: e.registeredUsers?.length || 0
+}))
 return(
 
 <div className="bg-gray-100 min-h-screen">
 
-<MainNavbar/>
+<Header search={search} setSearch={setSearch}/>
 
 <div className="flex">
 
@@ -94,7 +103,7 @@ Welcome Organizer 🚀
 <p>No events created</p>
 ) : (
 
-events.map((event,index)=>{
+filteredEvents.map((event,index)=>{
 
 return(
 
@@ -108,7 +117,13 @@ className="h-40 w-full object-cover"
 <div className="p-4">
 
 <h3 className="font-bold text-lg">{event.title}</h3>
-<p className="text-gray-600">{event.date}</p>
+<p className={
+getStatus(event.date)==="Upcoming"
+? "text-green-500"
+: "text-gray-500"
+}>
+{getStatus(event.date)}
+</p>
 <p className="text-gray-500">{event.location}</p>
 
 <div className="flex justify-between mt-4">
@@ -190,7 +205,21 @@ upcomingEvents.map(e=>(
 </table>
 
 </div>
+<div className="bg-white p-6 rounded-xl shadow mt-8">
 
+<h3 className="font-bold mb-4">Event Participation</h3>
+
+<ResponsiveContainer width="100%" height={300}>
+  <BarChart data={chartData}>
+    <CartesianGrid strokeDasharray="3 3"/>
+    <XAxis dataKey="name"/>
+    <YAxis/>
+    <Tooltip/>
+    <Bar dataKey="participants"/>
+  </BarChart>
+</ResponsiveContainer>
+
+</div>
 </div>
 
 </div>

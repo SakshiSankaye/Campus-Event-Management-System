@@ -8,7 +8,10 @@ function StudentDashboard(){
 
 const user = JSON.parse(localStorage.getItem("user"))
 
+// ✅ STATES
 const [events,setEvents] = useState([])
+const [search,setSearch] = useState("")
+const [loading,setLoading] = useState(true)
 
 // LOAD EVENTS
 useEffect(()=>{
@@ -17,10 +20,13 @@ loadEvents()
 
 const loadEvents = async()=>{
 try{
+setLoading(true)
 const res = await axios.get("http://localhost:5000/api/events")
 setEvents(res.data)
+setLoading(false)
 }catch(err){
 console.log(err)
+setLoading(false)
 }
 }
 
@@ -31,10 +37,8 @@ await axios.post(`http://localhost:5000/api/events/${id}/register`,{
 name:user?.name,
 email:user?.email
 })
-
 alert("Registered Successfully")
 loadEvents()
-
 }catch(err){
 console.log(err)
 }
@@ -44,16 +48,28 @@ console.log(err)
 const images = [
 "https://images.unsplash.com/photo-1523580494863-6f3031224c94",
 "https://images.unsplash.com/photo-1515168833906-d2a3b82b302a",
-"https://images.unsplash.com/photo-1505373877841-8d25f7d46678"
+"https://images.unsplash.com/photo-1505373877841-8d25f7d46678",
+"https://images.unsplash.com/photo-1519389950473-47ba0277781c"
 ]
 
 // CALCULATIONS
 const totalEvents = events.length
+
 const registeredCount = events.filter(e => 
 (e.registeredUsers || []).some(u=>u.email === user?.email)
 ).length
 
 const upcoming = events.filter(e => new Date(e.date) > new Date())
+
+// ✅ SEARCH FILTER
+const filteredEvents = events.filter(e =>
+e.title?.toLowerCase().includes(search.toLowerCase())
+)
+
+// STATUS
+const getStatus = (date)=>{
+return new Date(date) > new Date() ? "Upcoming" : "Live"
+}
 
 return(
 
@@ -63,39 +79,66 @@ return(
 
 <div className="main">
 
-<Header/>
+{/* ✅ HEADER WITH SEARCH */}
+<Header search={search} setSearch={setSearch}/>
 
 <div className="content">
 
-{/* 🔥 WELCOME */}
-<div className="welcome-box">
-Welcome {user?.name} 👋
+{/* HEADER */}
+<h2 className="dash-title">Dashboard</h2>
+<p className="dash-sub">Welcome back, {user?.name} 👋</p>
+
+{/* STATS */}
+<div className="stats-modern">
+
+<div className="stat-box blue">
+<h2>{registeredCount}</h2>
+<p>Registered Events</p>
 </div>
 
-{/* 🔥 STATS */}
-<div className="stats">
-
-<div className="card blue">
-<h3>Total Events</h3>
-<p>{totalEvents}</p>
+<div className="stat-box purple">
+<h2>{totalEvents}</h2>
+<p>Available Events</p>
 </div>
 
-<div className="card green">
-<h3>Registered</h3>
-<p>{registeredCount}</p>
+<div className="stat-box orange">
+<h2>{upcoming.length}</h2>
+<p>Upcoming Events</p>
 </div>
 
-<div className="card purple">
-<h3>Upcoming</h3>
-<p>{upcoming.length}</p>
+<div className="stat-box green">
+<h2>{registeredCount * 2}</h2>
+<p>Certificates</p>
 </div>
 
 </div>
 
-{/* 🔥 EVENTS GRID */}
+{/* EVENTS */}
+<div className="section-title">
+<h3>Events</h3>
+<span>View All</span>
+</div>
+
+{/* ✅ LOADING */}
+{loading ? (
+<div className="event-grid">
+{[1,2,3].map(i=>(
+<div key={i} className="skeleton"></div>
+))}
+</div>
+) : filteredEvents.length === 0 ? (
+
+/* ✅ EMPTY STATE */
+<div style={{textAlign:"center", marginTop:"20px"}}>
+<h3>No events found 😔</h3>
+<p>Try searching something else</p>
+</div>
+
+) : (
+
 <div className="event-grid">
 
-{events.map((event, index) => {
+{filteredEvents.slice(0,6).map((event,index)=>{
 
 const isRegistered = (event.registeredUsers || []).some(
 u => u.email === user?.email
@@ -103,19 +146,32 @@ u => u.email === user?.email
 
 return(
 
-<div key={index} className="event-card">
+<div key={index} className="event-card-modern">
 
 <img 
 src={images[index % images.length]} 
-alt="event"
 className="event-img"
 />
 
-<div className="event-content">
+<div className="event-body">
 
-<h3>{event.title}</h3>
+<span className="tag">
+{["Tech","Design","Business"][index % 3]}
+</span>
+
+{/* ✅ STATUS */}
+<span className={`status ${getStatus(event.date)}`}>
+{getStatus(event.date)}
+</span>
+
+<h4>{event.title}</h4>
+
 <p>📅 {event.date}</p>
 <p>📍 {event.location}</p>
+
+<p style={{fontSize:"12px", color:"#999"}}>
+{Math.max(1, Math.ceil((new Date(event.date)-new Date())/(1000*60*60*24)))} days left
+</p>
 
 <button
 onClick={()=>registerEvent(event._id)}
@@ -134,46 +190,25 @@ className={isRegistered ? "btn-disabled" : "btn-primary"}
 })}
 
 </div>
+)}
 
-{/* 🔥 REGISTERED EVENTS */}
-<div className="registered-section">
+{/* BOTTOM SECTION */}
+<div className="bottom-section">
 
-<h3>My Registered Events</h3>
+<div className="activity-box">
+<h3>Recent Activity</h3>
+<ul>
+<li>✔ Registered for Hackathon</li>
+<li>🏆 Earned certificate</li>
+<li>📌 Bookmarked event</li>
+</ul>
+</div>
 
-<table className="table">
-
-<thead>
-<tr>
-<th>Event</th>
-<th>Date</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-
-{events
-.filter(e=> 
-(e.registeredUsers || []).some(u=>u.email === user?.email)
-)
-.map(e=>(
-<tr key={e._id}>
-
-<td>{e.title}</td>
-<td>{e.date}</td>
-<td className="status">Registered</td>
-
-<td>
-<button className="view-btn">View</button>
-</td>
-
-</tr>
-))}
-
-</tbody>
-
-</table>
+<div className="recommend-box">
+<h3>Recommended For You</h3>
+<p>AI & Machine Learning Workshop</p>
+<button className="explore-btn">Explore More</button>
+</div>
 
 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaBell, FaUser } from "react-icons/fa";
+import { FaBell, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Header({ search, setSearch }) {
@@ -7,60 +7,98 @@ function Header({ search, setSearch }) {
   const [showNotif, setShowNotif] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const navigate = useNavigate();   // ✅ FIX ADDED
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const notifications = [
+    "🎉 New event: Hackathon",
+    "📢 Seminar updated",
+    "🏆 Certificate added"
+  ];
 
   return (
 
     <div className="header">
 
-      {/* Search */}
-      <input
-        className="search"
-        placeholder="Search events..."
-        value={search || ""}
-        onChange={(e) => {
-          if (setSearch) {
-            setSearch(e.target.value);
-          }
-        }}
-      />
+      {/* 🔥 LOGO */}
+      <h2 className="logo">
+        Campus Event Management System
+      </h2>
 
-      {/* Icons */}
-      <div className="icons">
+      {/* 🔥 RIGHT SIDE */}
+      <div className="right-section">
 
-        {/* 🔔 Notification */}
+        {/* 🔍 SEARCH WITH ICON */}
+        <div className="search-box">
+          <FaSearch className="search-icon"/>
+          <input
+            placeholder="Search events..."
+            value={search || ""}
+            onChange={(e) => setSearch && setSearch(e.target.value)}
+          />
+        </div>
+
+        {/* 🔔 NOTIFICATION */}
         <div className="icon-box">
-          <FaBell onClick={() => {
-            setShowNotif(!showNotif);
-            setShowProfile(false);
-          }}/>
+          <FaBell 
+            className="icon"
+            onClick={() => {
+              setShowNotif(!showNotif);
+              setShowProfile(false);
+            }}
+          />
+
+          {/* 🔴 BADGE */}
+          {notifications.length > 0 && (
+            <span className="badge">
+              {notifications.length}
+            </span>
+          )}
 
           {showNotif && (
             <div className="dropdown">
-              <p>🎉 New event: Hackathon</p>
-              <p>📢 Seminar updated</p>
-              <p>🏆 Certificate added</p>
+              {notifications.map((n,i)=>(
+                <p key={i}>{n}</p>
+              ))}
             </div>
           )}
         </div>
 
-        {/* 👤 Profile */}
+        {/* 👤 AVATAR */}
         <div className="icon-box">
-          <FaUser onClick={() => {
-            setShowProfile(!showProfile);
-            setShowNotif(false);
-          }}/>
+          <img
+            src={user?.profilePic || "https://i.pravatar.cc/40"}
+            alt="profile"
+            className="avatar"
+            onClick={() => {
+              setShowProfile(!showProfile);
+              setShowNotif(false);
+            }}
+          />
 
           {showProfile && (
             <div className="dropdown">
-              <p onClick={()=>navigate("/student-profile")}>My Profile</p>
+
+              <p className="user-name">
+                {user?.name || "User"}
+              </p>
+
+              <p className="user-email">
+                {user?.email}
+              </p>
+
+              <hr/>
+
+              <p onClick={()=>navigate("/profile")}>My Profile</p>
               <p onClick={()=>navigate("/student-settings")}>Settings</p>
-              <p style={{color:"red"}} onClick={()=>{
+
+              <p className="logout" onClick={()=>{
                 localStorage.clear();
                 navigate("/");
               }}>
                 Logout
               </p>
+
             </div>
           )}
         </div>

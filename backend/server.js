@@ -11,8 +11,8 @@ const app = express() // dont change other sections just update required for now
 // ================= MIDDLEWARE =================
 
 app.use(cors())
-app.use(express.json())
-
+app.use(express.json({ limit: "10mb" }))
+app.use(express.urlencoded({ limit: "10mb", extended: true }))
 // ================= DATABASE =================
 
 mongoose.connect("mongodb://127.0.0.1:27017/campus_events", {

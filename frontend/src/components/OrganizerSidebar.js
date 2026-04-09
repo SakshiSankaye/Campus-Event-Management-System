@@ -16,7 +16,7 @@ return(
 Dashboard
 </li>
 
-<li onClick={()=>navigate("/organizer/create-event")} className="cursor-pointer hover:text-blue-400">
+<li onClick={()=>navigate("/organizer/Create-Event")} className="cursor-pointer hover:text-blue-400">
 Create Events
 </li>
 
@@ -35,7 +35,9 @@ Attendance
 <li onClick={()=>navigate("/organizer/feedback")} className="cursor-pointer hover:text-blue-400">
 Feedback
 </li>
-
+<li onClick={()=>navigate("/profile")} className="cursor-pointer">
+Profile
+</li>
 </ul>
 
 </div>
