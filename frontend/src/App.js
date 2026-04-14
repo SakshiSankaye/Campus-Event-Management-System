@@ -10,8 +10,8 @@ import ManageEvents from "./pages/ManageEvents"
 import CreateEvent from "./pages/CreateEvent"
 import EditEvent from "./pages/EditEvent"
 import OrganizerDashboard from "./pages/OrganizerDashboard"
-import OrganizerCreateEvent from "./pages/OrganizerCreateEvent"
-import OrganizerManageEvents from "./pages/OrganizerManageEvents"
+import OrganizerCreateEvent from "./pages/OrganizerCreateEvent";
+import OrganizerManageEvents from "./pages/OrganizerManageEvents";
 import OrganizerEditEvent from "./pages/OrganizerEditEvent"
 import Participants from "./pages/Participants"
 import Attendance from "./pages/Attendance"
@@ -24,6 +24,7 @@ import StudentFeedback from "./pages/StudentFeedback";
 import StudentProfile from "./pages/StudentProfile";
 import StudentSettings from "./pages/StudentSettings";
 import Profile from "./pages/Profile"
+import Reports from "./pages/Reports";
 
 function App(){
 
@@ -48,6 +49,11 @@ return(
 <Route path="/profile" element={<Profile/>}/>
 
 {/* ORGANIZER */}
+<Route path="/organizer-dashboard" element={<OrganizerDashboard />} />
+<Route path="/create-event" element={<OrganizerCreateEvent />} />
+<Route path="/organizer-manage-events" element={<OrganizerManageEvents />}/>
+<Route path="/participants" element={<Participants />} />
+<Route path="/reports" element={<Reports />} />
 
 {/* ADMIN */}
 <Route path="/admin" element={<Navigate to="/admin/dashboard"/>}/>

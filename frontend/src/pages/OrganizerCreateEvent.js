@@ -1,252 +1,223 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import OrganizerSidebar from "../components/OrganizerSidebar"
-import Header from "../components/Header"
-import { createEvent } from "../services/adminApi"
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  LayoutDashboard,
+  PlusCircle,
+  CalendarDays,
+  Users,
+  Bell,
+  Search,
+} from "lucide-react";
+import "../styles/dashboard.css";
 
-function OrganizerCreateEvent(){
+export default function OrganizerCreateEvent() {
+  const navigate = useNavigate();
 
-const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "",
+    venue: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+  });
 
-const [preview,setPreview] = useState(null)
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-const [form,setForm]=useState({
-title:"",
-description:"",
-date:"",
-time:"",
-location:"",
-category:"",
-type:"Offline",
-link:"",
-maxParticipants:"",
-deadline:"",
-tags:"",
-image:null
-})
+ const handleSubmit = async () => {
+  try {
+    const eventData = {
+      title: formData.title,
+      description: formData.description,
+      date: formData.startDate,   // required by schema
+      createdBy: "Organizer"
+    };
 
-// HANDLE INPUT
-const handleChange = (e)=>{
-setForm({...form,[e.target.name]:e.target.value})
+    await axios.post("http://localhost:5000/api/events", eventData);
+
+    alert("Event Created Successfully!");
+    navigate("/organizer-dashboard");
+
+  } catch (error) {
+    console.log(error);
+    alert(error.response?.data?.message || "Failed to create event");
+  }
+};
+
+  return (
+    <div className="ce-page">
+
+      {/* Sidebar */}
+      <aside className="ce-sidebar">
+        <div>
+          <div className="ce-logo">
+            <div className="ce-logo-icon">✦</div>
+            <div>
+              <h3>EVENT HUB</h3>
+              <p>PREMIUM CONCIERGE</p>
+            </div>
+          </div>
+
+          <div
+            className="ce-menu-item"
+            onClick={() => navigate("/organizer-dashboard")}
+          >
+            <LayoutDashboard size={16} />
+            Dashboard
+          </div>
+
+          <div className="ce-menu-item active">
+            <PlusCircle size={16} />
+            Create Event
+          </div>
+
+          <div
+            className="ce-menu-item"
+            onClick={() => navigate("/organizer-manage-events")}
+          >
+            <CalendarDays size={16} />
+            Manage Events
+          </div>
+
+          <div
+            className="ce-menu-item"
+            onClick={() => navigate("/participants")}
+          >
+            <Users size={16} />
+            Participants
+          </div>
+        </div>
+      </aside>
+
+      {/* Main */}
+      <main className="ce-main">
+
+        {/* Topbar */}
+        <div className="ce-topbar">
+          <h2>Create Event</h2>
+
+          <div className="ce-top-right">
+            <div className="ce-search">
+              <Search size={14} />
+              <input placeholder="Search resources..." />
+            </div>
+
+            <Bell size={16} />
+            <div className="ce-avatar"></div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="ce-grid">
+
+          {/* Left */}
+          <div className="ce-left">
+
+            <div className="ce-card">
+              <h3>Event Identity</h3>
+              <p>Define the core personality and details of your occasion.</p>
+
+              <label>EVENT TITLE</label>
+              <input
+                name="title"
+                placeholder="e.g. Annual Architecture Symposium 2024"
+                onChange={handleChange}
+              />
+
+              <div className="ce-two">
+                <div>
+                  <label>CATEGORY</label>
+                  <input
+                    name="category"
+                    placeholder="Exhibition"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label>VENUE</label>
+                  <input
+                    name="venue"
+                    placeholder="Search location..."
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <label>DESCRIPTION</label>
+              <textarea
+                name="description"
+                placeholder="Elaborate on the event's objectives, target audience, and key highlights..."
+                onChange={handleChange}
+              ></textarea>
+            </div>
+
+            <div className="ce-card">
+              <h3>Timeline</h3>
+              <p>Schedule the windows for your event sessions.</p>
+
+              <div className="ce-two">
+                <div>
+                  <label>START DATE & TIME</label>
+                  <input
+                    type="datetime-local"
+                    name="startDate"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label>END DATE & TIME</label>
+                  <input
+                    type="datetime-local"
+                    name="endDate"
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Right */}
+          <div className="ce-right">
+
+            <div className="ce-card small">
+              <h4>VISUAL IDENTITY</h4>
+
+              <div className="upload-box">
+                Upload Event Image
+              </div>
+
+              <div className="preview-box">
+                No image selected
+              </div>
+            </div>
+
+            <div className="launch-card">
+              <h3>Ready to Launch?</h3>
+              <p>
+                Ensure all mandatory details are filled to enable live registration.
+              </p>
+
+              <button onClick={handleSubmit}>
+                Create Event
+              </button>
+
+              <button className="draft-btn">
+                Save as Draft
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 }
-
-// IMAGE
-const handleImage = (e)=>{
-const file = e.target.files[0]
-setForm({...form,image:file})
-
-if(file){
-setPreview(URL.createObjectURL(file))
-}
-}
-
-// SUBMIT
-const submit = async(e)=>{
-e.preventDefault()
-
-if(!form.title || !form.date){
-alert("Please fill required fields")
-return
-}
-
-const formData = new FormData()
-
-for(let key in form){
-formData.append(key, form[key])
-}
-
-await createEvent(formData)
-
-alert("Event Created Successfully 🚀")
-navigate("/organizer/manage-events")
-}
-return(
-
-<div className="flex bg-gray-100 min-h-screen">
-
-<OrganizerSidebar/>
-
-<div className="flex-1">
-
-<Header/>
-
-
-<div className="p-8">
-
-<h2 className="text-3xl font-bold mb-6">Create Event</h2>
-
-<form onSubmit={submit} className="bg-white p-6 rounded-xl shadow-lg space-y-6 max-w-4xl">
-
-{/* 🔥 BASIC INFO */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Basic Information</h3>
-
-<input
-name="title"
-placeholder="Event Title"
-className="border p-2 w-full mb-3"
-onChange={handleChange}
-/>
-
-<textarea
-name="description"
-placeholder="Event Description"
-className="border p-2 w-full"
-rows="3"
-onChange={handleChange}
-/>
-
-</div>
-
-{/* 🔥 DATE & TIME */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Schedule</h3>
-
-<div className="grid grid-cols-3 gap-4">
-
-<input
-type="date"
-name="date"
-className="border p-2"
-onChange={handleChange}
-/>
-
-<input
-type="time"
-name="time"
-className="border p-2"
-onChange={handleChange}
-/>
-
-<input
-type="date"
-name="deadline"
-className="border p-2"
-placeholder="Registration Deadline"
-onChange={handleChange}
-/>
-
-</div>
-
-</div>
-
-{/* 🔥 LOCATION / MODE */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Location & Mode</h3>
-
-<div className="grid grid-cols-2 gap-4">
-
-<select
-name="type"
-className="border p-2"
-onChange={handleChange}
->
-<option value="Offline">Offline</option>
-<option value="Online">Online</option>
-</select>
-
-<input
-name="location"
-placeholder="Location / Venue"
-className="border p-2"
-onChange={handleChange}
-/>
-
-</div>
-
-{/* ONLINE LINK */}
-{form.type === "Online" && (
-<input
-name="link"
-placeholder="Meeting Link (Google Meet / Zoom)"
-className="border p-2 w-full mt-3"
-onChange={handleChange}
-/>
-)}
-
-</div>
-
-{/* 🔥 CATEGORY & TAGS */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Category</h3>
-
-<div className="grid grid-cols-2 gap-4">
-
-<select
-name="category"
-className="border p-2"
-onChange={handleChange}
->
-<option value="">Select Category</option>
-<option value="Technical">Technical</option>
-<option value="Cultural">Cultural</option>
-<option value="Sports">Sports</option>
-<option value="Workshop">Workshop</option>
-<option value="Seminar">Seminar</option>
-</select>
-
-<input
-name="tags"
-placeholder="Tags (AI, Coding, Dance)"
-className="border p-2"
-onChange={handleChange}
-/>
-
-</div>
-
-</div>
-
-{/* 🔥 PARTICIPANTS */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Participants</h3>
-
-<input
-type="number"
-name="maxParticipants"
-placeholder="Max Participants"
-className="border p-2 w-full"
-onChange={handleChange}
-/>
-
-</div>
-
-{/* 🔥 IMAGE UPLOAD */}
-<div>
-<h3 className="text-xl font-semibold mb-3">Event Poster</h3>
-
-<input
-type="file"
-accept="image/*"
-onChange={handleImage}
-className="border p-2 w-full"
-/>
-
-{/* PREVIEW */}
-{preview && (
-<img
-src={preview}
-alt="preview"
-className="mt-4 w-full h-48 object-cover rounded"
-/>
-)}
-
-</div>
-
-{/* 🔥 SUBMIT */}
-<button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded w-full text-lg">
-Create Event 🚀
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-)
-
-}
-
-export default OrganizerCreateEvent

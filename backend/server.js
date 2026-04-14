@@ -4,7 +4,8 @@ const cors = require("cors")
 
 const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/userRoutes")
-const eventRoutes = require("./routes/eventRoutes") // ⭐ ADD THIS
+const eventRoutes = require("./routes/eventRoutes")
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express() // dont change other sections just update required for now
 
@@ -13,6 +14,7 @@ const app = express() // dont change other sections just update required for now
 app.use(cors())
 app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ limit: "10mb", extended: true }))
+app.use("/api/dashboard", dashboardRoutes);
 // ================= DATABASE =================
 
 mongoose.connect("mongodb://127.0.0.1:27017/campus_events", {
@@ -31,7 +33,7 @@ app.use("/api/auth", authRoutes)
 
 app.use("/api/users", userRoutes)
 
-app.use("/api/events", eventRoutes) // ⭐ ADD THIS
+app.use("/api/events", eventRoutes) 
 
 // Test route
 app.get("/", (req, res) => {
