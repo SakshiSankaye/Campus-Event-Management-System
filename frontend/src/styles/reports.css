@@ -1,0 +1,400 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Inter,Arial,sans-serif;
+background:#f4f6fb;
+color:#111827;
+}
+
+.rp-page{
+display:flex;
+min-height:100vh;
+}
+
+/* Sidebar */
+.rp-sidebar{
+width:230px;
+background:#f8fafc;
+border-right:1px solid #e5e7eb;
+padding:18px 14px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.rp-brand{
+display:flex;
+gap:10px;
+align-items:center;
+margin-bottom:22px;
+}
+
+.rp-brand-icon{
+width:30px;
+height:30px;
+border-radius:8px;
+background:#2563eb;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:700;
+}
+
+.rp-brand h3{
+font-size:13px;
+font-weight:700;
+}
+
+.rp-brand p{
+font-size:9px;
+color:#94a3b8;
+margin-top:2px;
+}
+
+.rp-menu{
+display:flex;
+align-items:center;
+gap:10px;
+padding:11px 10px;
+border-radius:10px;
+font-size:13px;
+cursor:pointer;
+margin-bottom:6px;
+color:#475569;
+}
+
+.rp-menu.active{
+background:#eef2ff;
+color:#2563eb;
+font-weight:600;
+}
+
+.rp-create-btn{
+width:100%;
+padding:11px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:#fff;
+font-size:13px;
+cursor:pointer;
+margin-bottom:14px;
+}
+
+.rp-side-link{
+display:flex;
+gap:8px;
+align-items:center;
+font-size:13px;
+color:#64748b;
+margin-top:10px;
+cursor:pointer;
+}
+
+/* Main */
+.rp-main{
+flex:1;
+padding:18px;
+}
+
+.rp-topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.rp-search{
+width:250px;
+height:34px;
+background:#fff;
+border-radius:999px;
+padding:0 12px;
+display:flex;
+align-items:center;
+gap:8px;
+border:1px solid #edf2f7;
+}
+
+.rp-search input{
+border:none;
+outline:none;
+width:100%;
+font-size:13px;
+background:transparent;
+}
+
+.rp-profile-wrap{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.rp-divider{
+width:1px;
+height:20px;
+background:#e5e7eb;
+}
+
+.rp-profile-text h4{
+font-size:12px;
+font-weight:700;
+}
+
+.rp-avatar{
+width:30px;
+height:30px;
+border-radius:50%;
+background:#0f172a;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:13px;
+font-weight:700;
+}
+
+/* Heading */
+.rp-head-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:16px;
+}
+
+.rp-head-row h1{
+font-size:22px;
+font-weight:700;
+}
+
+.rp-head-actions{
+display:flex;
+gap:10px;
+}
+
+.light-btn,
+.blue-btn,
+.gray-btn{
+border:none;
+padding:10px 14px;
+border-radius:10px;
+font-size:13px;
+cursor:pointer;
+display:flex;
+align-items:center;
+gap:6px;
+}
+
+.light-btn{
+background:#fff;
+}
+
+.blue-btn{
+background:#2563eb;
+color:#fff;
+}
+
+.gray-btn{
+width:100%;
+justify-content:center;
+background:#f1f5f9;
+margin-top:14px;
+}
+
+/* Grid */
+.rp-grid-top{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:16px;
+margin-bottom:16px;
+}
+
+.rp-grid-bottom{
+display:grid;
+grid-template-columns:1fr 1.4fr;
+gap:16px;
+}
+
+.rp-card{
+background:#fff;
+border-radius:18px;
+padding:20px;
+border:1px solid #eef2f7;
+}
+
+.rp-card.large h3{
+font-size:22px;
+margin-bottom:8px;
+}
+
+.rp-card p{
+font-size:13px;
+color:#64748b;
+margin-bottom:16px;
+}
+
+.rp-form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-bottom:16px;
+}
+
+.rp-field label{
+font-size:10px;
+font-weight:700;
+color:#94a3b8;
+display:block;
+margin-bottom:6px;
+}
+
+.rp-input{
+height:42px;
+background:#f8fafc;
+border-radius:10px;
+display:flex;
+align-items:center;
+gap:8px;
+padding:0 12px;
+font-size:13px;
+}
+
+.rp-options{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+font-size:12px;
+color:#64748b;
+}
+
+/* Finance */
+.finance-card{
+background:#2563eb;
+color:#fff;
+border-radius:22px;
+padding:22px;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:260px;
+}
+
+.live-tag{
+position:absolute;
+top:18px;
+right:18px;
+background:rgba(255,255,255,.18);
+padding:5px 10px;
+border-radius:999px;
+font-size:10px;
+}
+
+.money-icon{
+font-size:24px;
+margin-top:8px;
+}
+
+.finance-card small{
+opacity:.8;
+margin-top:14px;
+}
+
+.finance-card h2{
+font-size:38px;
+margin:8px 0;
+}
+
+.finance-card p{
+font-size:13px;
+margin-bottom:18px;
+color:#dbeafe;
+}
+
+.finance-card button{
+border:none;
+background:#fff;
+color:#2563eb;
+padding:12px;
+border-radius:10px;
+font-weight:600;
+cursor:pointer;
+}
+
+/* Bottom */
+.mini-box{
+background:#f8fafc;
+border-radius:12px;
+padding:14px;
+margin-top:12px;
+}
+
+.mini-box small{
+font-size:10px;
+color:#94a3b8;
+display:block;
+margin-bottom:4px;
+}
+
+.mini-box strong{
+font-size:13px;
+}
+
+.recent-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:14px;
+}
+
+.recent-head span{
+font-size:12px;
+color:#2563eb;
+cursor:pointer;
+}
+
+.report-row{
+display:grid;
+grid-template-columns:14px 1fr auto auto;
+gap:10px;
+align-items:center;
+padding:12px 0;
+border-top:1px solid #f1f5f9;
+}
+
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+}
+
+.orange{background:#fb923c;}
+.blue{background:#60a5fa;}
+.purple{background:#a78bfa;}
+
+.report-info strong{
+font-size:13px;
+display:block;
+}
+
+.report-info p{
+font-size:11px;
+color:#64748b;
+margin:2px 0 0;
+}
+
+.report-actions{
+display:flex;
+align-items:center;
+gap:4px;
+font-size:11px;
+color:#64748b;
+cursor:pointer;
+}

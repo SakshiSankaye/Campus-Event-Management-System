@@ -57,9 +57,12 @@ return(
 
 {/* ADMIN */}
 <Route path="/admin" element={<Navigate to="/admin/dashboard"/>}/>
+<Route path="/admin/manage-events" element={<ManageEvents />} />
+
 
 <Route path="/admin/dashboard" element={<AdminDashboard/>}/>
 <Route path="/admin/users" element={<ManageUsers/>}/>
+<Route path="/admin/reports" element={<Reports/>}/>
 <Route path="/admin/events" element={<ManageEvents/>}/>
 <Route path="/admin/create-event" element={<CreateEvent/>}/>
 <Route path="/admin/edit-event/:id" element={<EditEvent/>}/>
