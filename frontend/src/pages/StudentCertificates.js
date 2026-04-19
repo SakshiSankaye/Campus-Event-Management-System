@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import StudentSidebar from "../components/StudentSidebar";
+import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import CertificateCard from "../components/CertificateCard";
 import "../styles/certificates.css";
 
-function StudentCertificates(){
+function StudentCertificates() {
 
   const [search, setSearch] = useState("");
 
@@ -33,11 +33,10 @@ function StudentCertificates(){
     c.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  return(
+  return (
 
     <div className="dashboard">
 
-      <StudentSidebar/>
 
       <div className="main">
 
@@ -52,7 +51,7 @@ function StudentCertificates(){
 
             {filtered.length > 0 ? (
               filtered.map((cert, index) => (
-                <CertificateCard key={index} cert={cert}/>
+                <CertificateCard key={index} cert={cert} />
               ))
             ) : (
               <div className="empty-state">

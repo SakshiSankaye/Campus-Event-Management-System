@@ -1,34 +1,26 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const EventSchema = new mongoose.Schema({
+const eventSchema = new mongoose.Schema({
+    title: String,
+    description: String,
+    date: String,
+    time: String,
+    venue: String,
+    organizerId: String,
 
-title:{
-type:String,
-required:true
-},
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    },
 
-description:{
-type:String
-},
+    participants: [
+        {
+            userId: String,
+            name: String,
+            email: String
+        }
+    ]
+}, { timestamps: true });
 
-date:{
-type:String,
-required:true
-},
-
-createdBy:{
-type:String
-},
-
-// ⭐ ADD THIS (Participants)
-registeredUsers:[
-{
-name:{
-type:String
-}
-}
-]
-
-})
-
-module.exports = mongoose.model("Event",EventSchema)
+module.exports = mongoose.model("Event", eventSchema);

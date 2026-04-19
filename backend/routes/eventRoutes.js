@@ -1,65 +1,33 @@
-const express = require("express")
-const router = express.Router()
-const Event = require("../models/Event")
+const express = require("express");
+const router = express.Router();
 
-// CREATE EVENT
+const {
+    createEvent,
+    approveEvent,
+    rejectEvent,
+    getApprovedEvents,
+    registerEvent,
+    getParticipants,
+    getAllEventsReport
+} = require("../controllers/eventController");
 
-router.post("/",async(req,res)=>{
+const auth = require("../middleware/authMiddleware");
 
-const event = new Event(req.body)
+// Organizer
+router.post("/create", auth, createEvent);
 
-await event.save()
+// Admin
+router.put("/approve/:id", auth, approveEvent);
+router.put("/reject/:id", auth, rejectEvent);
 
-res.json(event)
+// Student
+router.get("/approved", getApprovedEvents);
+router.post("/register/:id", auth, registerEvent);
 
-})
+// Organizer/Admin
+router.get("/participants/:id", auth, getParticipants);
 
-// GET EVENTS
+// Admin report
+router.get("/report", auth, getAllEventsReport);
 
-router.get("/",async(req,res)=>{
-
-const events = await Event.find()
-
-res.json(events)
-
-})
-
-// UPDATE EVENT
-
-router.put("/:id",async(req,res)=>{
-
-const updatedEvent = await Event.findByIdAndUpdate(
-req.params.id,
-req.body,
-{new:true}
-)
-
-res.json(updatedEvent)
-
-})
-
-// DELETE EVENT
-
-router.delete("/:id",async(req,res)=>{
-
-await Event.findByIdAndDelete(req.params.id)
-
-res.json({message:"Event deleted"})
-
-})
-
-// MARK ATTENDANCE
-router.post("/:id/attendance", async(req,res)=>{
-
-const {name,email} = req.body
-
-const event = await Event.findById(req.params.id)
-
-event.attendance.push({name,email})
-
-await event.save()
-
-res.json({message:"Attendance marked"})
-})
-
-module.exports = router
+module.exports = router;

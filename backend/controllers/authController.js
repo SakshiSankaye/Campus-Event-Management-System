@@ -1,73 +1,65 @@
-const User = require("../models/User")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-exports.signup = async(req,res)=>{
+exports.signup = async (req, res) => {
+    try {
+        const { name, email, password, role } = req.body;
 
-try{
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
 
-const {name,email,password,role} = req.body
+        const hashed = await bcrypt.hash(password, 10);
 
-const existingUser = await User.findOne({email})
+        const user = new User({
+            name,
+            email,
+            password: hashed,
+            role: role || "student" // ✅ default role
+        });
 
-if(existingUser){
-return res.status(400).json({message:"User already exists"})
-}
+        await user.save();
 
-const hashed = await bcrypt.hash(password,10)
+        res.json({ message: "Signup successful" });
 
-const user = new User({
-name,
-email,
-password:hashed,
-role
-})
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};
 
-await user.save()
+exports.login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
 
-res.json({message:"Signup successful"})
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
+        }
 
-}catch(err){
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.status(400).json({ message: "Invalid password" });
+        }
 
-res.status(500).json(err)
+        const token = jwt.sign(
+            { id: user._id, role: user.role },
+            process.env.JWT_SECRET || "secret",
+            { expiresIn: "1d" }
+        );
 
-}
+        res.json({
+            token,
+            role: user.role,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        });
 
-}
-
-exports.login = async(req,res)=>{
-
-try{
-
-const {email,password} = req.body
-
-const user = await User.findOne({email})
-
-if(!user){
-return res.status(400).json({message:"User not found"})
-}
-
-const match = await bcrypt.compare(password,user.password)
-
-if(!match){
-return res.status(400).json({message:"Invalid password"})
-}
-
-const token = jwt.sign(
-{id:user._id,role:user.role},
-"secret",
-{expiresIn:"1d"}
-)
-
-res.json({
-token,
-role:user.role
-})
-
-}catch(err){
-
-res.status(500).json(err)
-
-}
-
-}
+    } catch (err) {
+        res.status(500).json(err);
+    }
+};

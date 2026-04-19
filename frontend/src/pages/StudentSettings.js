@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import StudentSidebar from "../components/StudentSidebar";
+import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../styles/dashboard.css";
 
-function StudentSettings(){
+function StudentSettings() {
 
   const [name, setName] = useState("Tanishka Kadam");
   const [email, setEmail] = useState("tanishka@email.com");
@@ -12,15 +12,15 @@ function StudentSettings(){
     alert("Settings saved (dummy)");
   };
 
-  return(
+  return (
 
     <div className="dashboard">
 
-      <StudentSidebar/>
+
 
       <div className="main">
 
-        <Header/>
+        <Header />
 
         <div className="content">
 
@@ -29,10 +29,10 @@ function StudentSettings(){
           <div className="settings-card">
 
             <label>Name</label>
-            <input value={name} onChange={(e)=>setName(e.target.value)}/>
+            <input value={name} onChange={(e) => setName(e.target.value)} />
 
             <label>Email</label>
-            <input value={email} onChange={(e)=>setEmail(e.target.value)}/>
+            <input value={email} onChange={(e) => setEmail(e.target.value)} />
 
             <button onClick={handleSave}>Save Changes</button>
 

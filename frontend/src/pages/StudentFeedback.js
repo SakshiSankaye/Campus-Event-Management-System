@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import StudentSidebar from "../components/StudentSidebar";
+import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../styles/dashboard.css";
 
@@ -7,7 +7,7 @@ import "../styles/dashboard.css";
   Student Feedback Page
 */
 
-function StudentFeedback(){
+function StudentFeedback() {
 
   const [rating, setRating] = useState(0);
   const [event, setEvent] = useState("");
@@ -17,7 +17,7 @@ function StudentFeedback(){
   const [feedbackList, setFeedbackList] = useState([]);
 
   const handleSubmit = () => {
-    if(!event) return alert("Select event");
+    if (!event) return alert("Select event");
 
     const newFeedback = {
       event,
@@ -35,15 +35,15 @@ function StudentFeedback(){
     setMessage("");
   };
 
-  return(
+  return (
 
     <div className="dashboard">
 
-      <StudentSidebar/>
+
 
       <div className="main">
 
-        <Header/>
+        <Header />
 
         <div className="content">
 
@@ -56,9 +56,9 @@ function StudentFeedback(){
           <div className="feedback-box">
 
             {/* Event Select */}
-            <select 
-              value={event} 
-              onChange={(e)=>setEvent(e.target.value)}
+            <select
+              value={event}
+              onChange={(e) => setEvent(e.target.value)}
             >
               <option value="">Select Event</option>
               <option>Hackathon</option>
@@ -68,11 +68,11 @@ function StudentFeedback(){
 
             {/* Star Rating */}
             <div className="rating-box">
-              {[1,2,3,4,5].map((star)=>(
-                <span 
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
                   key={star}
                   className={star <= rating ? "star active" : "star"}
-                  onClick={()=>setRating(star)}
+                  onClick={() => setRating(star)}
                 >
                   ★
                 </span>
@@ -80,9 +80,9 @@ function StudentFeedback(){
             </div>
 
             {/* Experience */}
-            <select 
+            <select
               value={experience}
-              onChange={(e)=>setExperience(e.target.value)}
+              onChange={(e) => setExperience(e.target.value)}
             >
               <option value="">Overall Experience</option>
               <option>Excellent</option>
@@ -95,7 +95,7 @@ function StudentFeedback(){
             <textarea
               placeholder="Write your feedback..."
               value={message}
-              onChange={(e)=>setMessage(e.target.value)}
+              onChange={(e) => setMessage(e.target.value)}
             />
 
             {/* Submit */}
@@ -120,7 +120,7 @@ function StudentFeedback(){
               </thead>
 
               <tbody>
-                {feedbackList.map((f, i)=>(
+                {feedbackList.map((f, i) => (
                   <tr key={i}>
                     <td>{f.event}</td>
                     <td>{"★".repeat(f.rating)}</td>

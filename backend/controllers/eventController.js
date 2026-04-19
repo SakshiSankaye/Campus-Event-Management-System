@@ -1,35 +1,102 @@
-const Event = require("../models/Event")
+const Event = require("../models/Event");
 
-exports.createEvent = async(req,res)=>{
+exports.createEvent = async (req, res) => {
+    try {
+        const event = new Event({
+            ...req.body,
+            organizerId: req.user.id,
+            status: "pending"
+        });
 
-try{
+        await event.save();
 
-const event = new Event(req.body)
+        res.status(201).json({
+            message: "Event created, waiting for admin approval",
+            event
+        });
 
-await event.save()
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+exports.approveEvent = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
 
-res.json(event)
+        event.status = "approved";
+        await event.save();
 
-}catch(err){
+        res.json({ message: "Event approved" });
 
-res.status(500).json(err)
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
 
-}
+exports.rejectEvent = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
 
-}
+        event.status = "rejected";
+        await event.save();
 
-exports.getEvents = async(req,res)=>{
+        res.json({ message: "Event rejected" });
 
-try{
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+exports.getApprovedEvents = async (req, res) => {
+    try {
+        const events = await Event.find({ status: "approved" });
 
-const events = await Event.find()
+        res.json(events);
 
-res.json(events)
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+exports.registerEvent = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
 
-}catch(err){
+        event.participants.push({
+            userId: req.user.id,
+            name: req.user.name,
+            email: req.user.email
+        });
 
-res.status(500).json(err)
+        await event.save();
 
-}
+        res.json({ message: "Registered successfully" });
 
-}
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+exports.getParticipants = async (req, res) => {
+    try {
+        const event = await Event.findById(req.params.id);
+
+        res.json(event.participants);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+exports.getAllEventsReport = async (req, res) => {
+    try {
+        const events = await Event.find();
+
+        const report = events.map(event => ({
+            title: event.title,
+            status: event.status,
+            totalParticipants: event.participants.length
+        }));
+
+        res.json(report);
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
