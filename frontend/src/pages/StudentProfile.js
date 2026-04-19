@@ -1,43 +1,83 @@
 import React from "react";
-import StudentSidebar from "../components/StudentSidebar";
-import Header from "../components/Header";
-import "../styles/dashboard.css";
+import { useNavigate } from "react-router-dom";
+import "../styles/studentProfile.css";
 
-function StudentProfile(){
+function StudentProfile() {
+  const navigate = useNavigate();
 
-  const user = JSON.parse(localStorage.getItem("user")) || {};
-  return(
+  const user =
+    JSON.parse(localStorage.getItem("user")) || {};
 
-    <div className="dashboard">
+  const name =
+    user.name ||
+    user.email?.split("@")[0] ||
+    "Student";
 
-      <StudentSidebar/>
+  const email =
+    user.email || "student@email.com";
 
-      <div className="main">
+  return (
+    <div className="sp-page">
 
-        <Header/>
+      {/* Sidebar */}
+      <aside className="sp-sidebar">
+        <h2>Student Panel</h2>
 
-        <div className="content">
-
-          <div className="page-title">My Profile</div>
-
-          <div className="profile-card">
-
-            <div className="profile-avatar">
-  {user?.name ? user.name.charAt(0) : "U"}
-</div>
-
-            <h2>{user?.name || "User"}</h2>
-<p>{user?.email || "No Email"}</p>
-<p>{user?.role || "Student"}</p>
-
-          </div>
-
+        <div
+          className="sp-link"
+          onClick={() =>
+            navigate("/student/dashboard")
+          }
+        >
+          Dashboard
         </div>
 
-      </div>
+        <div
+          className="sp-link"
+          onClick={() =>
+            navigate("/student-browse-events")
+          }
+        >
+          Browse Events
+        </div>
 
+        <div
+          className="sp-link"
+          onClick={() =>
+            navigate("/student-my-events")
+          }
+        >
+          My Events
+        </div>
+
+        <div className="sp-link active">
+          Profile
+        </div>
+      </aside>
+
+      {/* Main */}
+      <main className="sp-main">
+        <h1>My Profile</h1>
+
+        <div className="profile-card">
+          <div className="profile-avatar">
+            {name.charAt(0).toUpperCase()}
+          </div>
+
+          <h2>{name}</h2>
+          <p>{email}</p>
+
+          <button
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </main>
     </div>
-
   );
 }
 
